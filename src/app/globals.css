@@ -1,10 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  /* Brutalist Palette */
-  --bg-primary: #e6e6e6; /* Off-white/Light Grey */
-  --text-primary: #111111; /* Deep Charcoal */
-  --accent: #ff3333; /* Aggressive Red for accents if needed */
+  --bg-primary: #030303; /* Deep space black */
+  --text-primary: #ffffff; 
+  --accent: #88ccff; /* Electric blue glow */
 }
 
 body {
@@ -12,7 +11,7 @@ body {
   color: var(--text-primary);
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
-  cursor: none; /* Custom Cursor */
+  cursor: none; 
 }
 
 /* Lenis recommended styles */
@@ -26,19 +25,21 @@ html.lenis, html.lenis body { height: auto; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Brutalist specific utilities */
-.grid-lines {
-  background-image: 
-    linear-gradient(to right, rgba(17, 17, 17, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(17, 17, 17, 0.05) 1px, transparent 1px);
-  background-size: 50px 50px;
+/* Cinematic utilities */
+.glow-text {
+  text-shadow: 0 0 20px rgba(136, 204, 255, 0.6), 0 0 40px rgba(136, 204, 255, 0.2);
 }
 
-.brutalist-border {
-  border: 1px solid var(--text-primary);
+.glow-box {
+  box-shadow: 0 0 30px rgba(136, 204, 255, 0.1), inset 0 0 20px rgba(136, 204, 255, 0.05);
+  border: 1px solid rgba(136, 204, 255, 0.2);
+  background: rgba(3, 3, 3, 0.6);
+  backdrop-filter: blur(10px);
 }
 
-.text-outline-dark {
+.text-outline-glow {
   color: transparent;
-  -webkit-text-stroke: 1px var(--text-primary);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 30px rgba(255,255,255,0.3);
 }
+
