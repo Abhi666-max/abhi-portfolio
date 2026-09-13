@@ -1,67 +1,65 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
+import gsap from 'gsap';
 
-export default function Preloader() {
+export default function Preloader({ onComplete }: { onComplete: () => void }) {
   const [progress, setProgress] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const topHalfRef = useRef<HTMLDivElement>(null);
+  const bottomHalfRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let currentProgress = 0;
-    
-    // Simulate loading
+    // Aggressive counter
+    let current = 0;
     const interval = setInterval(() => {
-      currentProgress += Math.floor(Math.random() * 15) + 1;
-      
-      if (currentProgress >= 100) {
-        currentProgress = 100;
-        setProgress(100);
+      current += Math.floor(Math.random() * 15) + 5;
+      if (current >= 100) {
+        current = 100;
         clearInterval(interval);
         
-        // Wait a bit at 100% before removing preloader
-        setTimeout(() => {
-          setIsLoaded(true);
-        }, 800);
-      } else {
-        setProgress(currentProgress);
+        // The split animation
+        const tl = gsap.timeline({
+          onComplete: () => {
+            if (containerRef.current) containerRef.current.style.display = 'none';
+            onComplete();
+          }
+        });
+
+        tl.to(textRef.current, {
+          opacity: 0,
+          scale: 1.5,
+          duration: 0.5,
+          ease: "expo.in"
+        })
+        .to(topHalfRef.current, {
+          yPercent: -100,
+          duration: 1.2,
+          ease: "expo.inOut"
+        }, "-=0.2")
+        .to(bottomHalfRef.current, {
+          yPercent: 100,
+          duration: 1.2,
+          ease: "expo.inOut"
+        }, "-=1.2");
       }
-    }, 150);
+      setProgress(current);
+    }, 40);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [onComplete]);
 
   return (
-    <AnimatePresence>
-      {!isLoaded && (
-        <motion.div
-          exit={{ y: "-100%" }}
-          transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 w-full h-screen bg-[#111111] z-[999] flex flex-col items-center justify-center text-[#e6e6e6]"
-        >
-          <div className="absolute inset-0 grid-lines opacity-10 pointer-events-none" />
-          
-          <div className="relative z-10 flex flex-col items-center">
-            <h1 
-              className="text-8xl md:text-[12vw] font-bold tracking-tighter uppercase mb-4"
-              style={{ fontFamily: 'var(--font-syncopate)' }}
-            >
-              {progress}%
-            </h1>
-            <div className="h-[2px] bg-[#e6e6e6]/20 w-64 md:w-96 overflow-hidden">
-              <motion.div 
-                className="h-full bg-[#ff3333]"
-                initial={{ width: "0%" }}
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.2 }}
-              />
-            </div>
-            <p className="mt-6 font-mono text-sm tracking-widest uppercase opacity-50">
-              Initializing Core Systems
-            </p>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div ref={containerRef} className="fixed inset-0 z-[999] pointer-events-none flex flex-col">
+      <div ref={topHalfRef} className="w-full h-1/2 bg-white origin-top" />
+      <div ref={bottomHalfRef} className="w-full h-1/2 bg-white origin-bottom" />
+      
+      <div ref={textRef} className="absolute inset-0 flex items-center justify-center mix-blend-difference">
+        <h1 className="text-[15vw] font-bold text-white tracking-tighter" style={{ fontFamily: 'var(--font-syncopate)' }}>
+          {progress}%
+        </h1>
+      </div>
+    </div>
   );
 }

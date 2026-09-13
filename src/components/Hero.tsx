@@ -10,34 +10,35 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function Hero() {
+export default function Hero({ isLoaded = true }: { isLoaded?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!titleRef.current || !subtitleRef.current) return;
+    if (!titleRef.current || !subtitleRef.current || !isLoaded) return;
 
     // Split text into individual characters for massive kinetic typography
     const splitTitle = new SplitType(titleRef.current, { types: 'chars,words' });
     
     const tl = gsap.timeline();
     
-    // Initial Load Animation
+    // Initial Load Animation (Fires only after preloader finishes)
     tl.fromTo(subtitleRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1.5, ease: "power4.out" }
     ).fromTo(splitTitle.chars, 
-      { opacity: 0, y: 100, rotationX: -90 },
+      { opacity: 0, y: 150, rotationX: -90, scale: 0.8 },
       {
         opacity: 1,
         y: 0,
         rotationX: 0,
-        stagger: 0.02,
-        duration: 1.2,
+        scale: 1,
+        stagger: 0.03,
+        duration: 1.5,
         ease: "expo.out"
       },
-      "-=0.5"
+      "-=1.0"
     );
 
     // ScrollTrigger: Explode text as we scroll down
@@ -47,18 +48,19 @@ export default function Hero() {
       end: "bottom top",
       scrub: 1,
       animation: gsap.to(splitTitle.chars, {
-        y: (i) => (i % 2 === 0 ? -200 : 200),
+        y: (i) => (i % 2 === 0 ? -400 : 400),
+        x: (i) => (i % 2 === 0 ? -200 : 200),
         opacity: 0,
-        rotationZ: (i) => (i % 2 === 0 ? -15 : 15),
+        rotationZ: (i) => (i % 2 === 0 ? -45 : 45),
+        scale: 0.5,
         ease: "none"
       })
     });
 
     return () => {
       splitTitle.revert();
-      ScrollTrigger.getAll().forEach(t => t.kill());
     };
-  }, []);
+  }, [isLoaded]);
 
   return (
     <section ref={containerRef} className="relative w-full h-screen flex flex-col items-center justify-center bg-black">
