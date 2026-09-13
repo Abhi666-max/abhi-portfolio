@@ -33,7 +33,6 @@ export default function About() {
         opacity: 1,
         stagger: 0.1,
         ease: "none",
-        color: "#fff",
       })
     });
 
@@ -45,25 +44,18 @@ export default function About() {
 
   return (
     <section id="about" ref={containerRef} className="relative min-h-screen w-full flex items-center justify-center px-6 md:px-20 py-32 z-10">
-      <div className="max-w-5xl">
-        <h2 className="text-sm font-mono tracking-widest uppercase text-[#88ccff] mb-12">
+      <div className="max-w-5xl z-10 pointer-events-none">
+        <h2 className="text-sm font-mono tracking-widest uppercase text-[#ff3333] mb-12">
           [01] // Core Directive
         </h2>
         
         <p 
           ref={textRef}
-          className="text-3xl md:text-5xl leading-tight md:leading-snug font-light text-white/10"
-          style={{ fontFamily: 'var(--font-playfair)' }}
+          className="text-3xl md:text-5xl leading-tight md:leading-snug font-bold text-[#111111]"
+          style={{ fontFamily: 'var(--font-inter)' }}
         >
           {portfolioData.profile.bio}
         </p>
-
-        {/* Subtle decorative elements */}
-        <div className="mt-20 flex gap-4">
-          <div className="w-16 h-[1px] bg-[#88ccff]/50" />
-          <div className="w-4 h-[1px] bg-[#88ccff]/50" />
-          <div className="w-1 h-[1px] bg-[#88ccff]/50" />
-        </div>
       </div>
     </section>
   );

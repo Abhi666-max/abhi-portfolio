@@ -1,61 +1,67 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const dotRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
+    // Only run on non-touch devices
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
+    setIsVisible(true);
+
+    const onMouseMove = (e: MouseEvent) => {
+      // Fast response for the dot
+      gsap.to(dotRef.current, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.1,
+        ease: "power2.out",
+      });
+
+      // Smooth lag for the outer ring
+      gsap.to(cursorRef.current, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.6,
+        ease: "power3.out",
+      });
     };
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      // Check if we are hovering over clickable items
-      if (
-        target.tagName === 'A' ||
-        target.tagName === 'BUTTON' ||
-        target.closest('a') ||
-        target.closest('button') ||
-        target.classList.contains('hover-target')
-      ) {
-        setIsHovered(true);
-      } else {
-        setIsHovered(false);
-      }
+    const onMouseEnter = () => {
+      gsap.to([cursorRef.current, dotRef.current], { scale: 1.5, opacity: 1, duration: 0.3 });
     };
 
-    window.addEventListener('mousemove', updateMousePosition);
-    window.addEventListener('mouseover', handleMouseOver);
+    const onMouseLeave = () => {
+      gsap.to([cursorRef.current, dotRef.current], { scale: 1, opacity: 0.5, duration: 0.3 });
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+    
+    // Add hover effects for all interactive elements
+    const hoverTargets = document.querySelectorAll('.hover-target, a, button');
+    hoverTargets.forEach((target) => {
+      target.addEventListener('mouseenter', onMouseEnter);
+      target.addEventListener('mouseleave', onMouseLeave);
+    });
 
     return () => {
-      window.removeEventListener('mousemove', updateMousePosition);
-      window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('mousemove', onMouseMove);
+      hoverTargets.forEach((target) => {
+        target.removeEventListener('mouseenter', onMouseEnter);
+        target.removeEventListener('mouseleave', onMouseLeave);
+      });
     };
-  }, [isVisible]);
+  }, []);
 
-  if (typeof window === 'undefined') return null;
+  if (!isVisible) return null;
 
   return (
     <>
-      <motion.div
-        className="fixed top-0 left-0 w-3 h-3 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        animate={{
-          x: mousePosition.x - 6,
-          y: mousePosition.y - 6,
-          scale: isHovered ? 2.5 : 1,
-          opacity: isVisible ? 1 : 0
-        }}
-        transition={{
-          type: 'spring',
-          stiffness: 250,
-          damping: 20,
-          mass: 0.1
         }}
       />
       <motion.div

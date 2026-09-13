@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from 'next/dynamic';
+import Preloader from '@/components/Preloader';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Experience from '@/components/Experience';
@@ -12,24 +13,22 @@ const Scene = dynamic(() => import('@/components/Scene'), { ssr: false });
 
 export default function Home() {
   return (
-    <main id="scroll-container" className="relative w-full overflow-hidden bg-transparent">
-      
-      {/* 3D WebGL Background Scene */}
-      <Scene />
+    <>
+      <Preloader />
+      <main id="scroll-container" className="relative w-full overflow-hidden bg-transparent selection:bg-[#ff3333] selection:text-[#e6e6e6]">
+        
+        {/* 3D WebGL Glass Object */}
+        <Scene />
 
-      {/* Foreground UI Layer */}
-      <div className="relative z-10 w-full">
-        
-        {/* All Sections */}
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        
-        {/* Footer */}
-        <Footer />
-        
-      </div>
-    </main>
+        {/* Foreground UI Layer */}
+        <div className="relative z-10 w-full">
+          <Hero />
+          <About />
+          <Experience />
+          <Projects />
+          <Footer />
+        </div>
+      </main>
+    </>
   );
 }
