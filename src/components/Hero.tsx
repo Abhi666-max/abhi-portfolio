@@ -86,7 +86,7 @@ export default function Hero() {
       >
         <div ref={subtitleRef} className="text-[var(--accent)] font-mono text-sm md:text-base tracking-[0.3em] uppercase mb-6 flex items-center gap-4 glow-text">
           <span className="w-8 h-[1px] bg-[var(--accent)] block" />
-          {portfolioData.profile.role}
+          {portfolioData.profile.title}
           <span className="w-8 h-[1px] bg-[var(--accent)] block" />
         </div>
         

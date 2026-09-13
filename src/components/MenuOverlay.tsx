@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { portfolioData } from '@/data/mockData';
-import { Github, Twitter, Linkedin } from 'lucide-react';
 import Magnetic from './Magnetic';
 
 const menuLinks = [
