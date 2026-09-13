@@ -6,6 +6,8 @@ import { portfolioData } from '@/data/mockData';
 import SplitType from 'split-type';
 import gsap from 'gsap';
 
+const chars = '!<>-_\\/[]{}—=+*^?#________';
+
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -23,6 +25,26 @@ export default function Hero() {
     if (titleRef.current && subtitleRef.current) {
       const splitTitle = new SplitType(titleRef.current, { types: 'chars' });
       
+      // Text Scrambler Effect
+      splitTitle.chars?.forEach((char, index) => {
+        const originalChar = char.innerText;
+        const scrambler = { val: 0 };
+        
+        gsap.to(scrambler, {
+          val: 1,
+          duration: 1 + Math.random() * 1.5,
+          delay: 0.5 + index * 0.05,
+          ease: "power2.inOut",
+          onUpdate: () => {
+            if (scrambler.val < 0.95) {
+              char.innerText = chars[Math.floor(Math.random() * chars.length)];
+            } else {
+              char.innerText = originalChar;
+            }
+          }
+        });
+      });
+
       const tl = gsap.timeline();
       
       tl.fromTo(splitTitle.chars, 

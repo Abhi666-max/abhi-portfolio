@@ -1,10 +1,11 @@
 "use client";
 
 import { portfolioData } from '@/data/mockData';
+import Magnetic from './Magnetic';
 
 export default function Footer() {
   return (
-    <footer className="relative w-full flex flex-col items-center justify-end pb-8 pt-32 z-10 bg-transparent">
+    <footer className="relative w-full flex flex-col items-center justify-end pb-8 pt-32 z-10 bg-transparent overflow-hidden">
       
       <div className="w-full max-w-7xl px-6 md:px-12 flex flex-col items-center relative z-10">
         
@@ -22,22 +23,25 @@ export default function Footer() {
         <div className="w-full flex flex-col md:flex-row justify-between items-center gap-8 font-mono text-sm text-[#111111]">
           
           <div className="flex gap-8 z-20">
-            <a href={`mailto:${portfolioData.profile.email}`} className="hover-target hover:text-[#ff3333] transition-colors uppercase tracking-widest font-bold">
-              {portfolioData.profile.email}
-            </a>
+            <Magnetic strength={30}>
+              <a href={`mailto:${portfolioData.profile.email}`} className="hover-target hover:text-[#ff3333] transition-colors uppercase tracking-widest font-bold p-4 -m-4">
+                {portfolioData.profile.email}
+              </a>
+            </Magnetic>
           </div>
 
           <div className="flex gap-6 z-20">
             {Object.entries(portfolioData.profile.socials).map(([name, url]) => (
-              <a 
-                key={name} 
-                href={url}
-                target="_blank"
-                rel="noreferrer"
-                className="hover-target uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
-              >
-                {name}
-              </a>
+              <Magnetic key={name} strength={40}>
+                <a 
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover-target uppercase tracking-widest opacity-60 hover:opacity-100 hover:text-[#ff3333] transition-all p-4 -m-4"
+                >
+                  {name}
+                </a>
+              </Magnetic>
             ))}
           </div>
 
