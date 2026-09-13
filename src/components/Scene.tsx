@@ -1,33 +1,51 @@
 "use client";
 
 import { Canvas } from '@react-three/fiber';
-import { Environment, Stars } from '@react-three/drei';
-import Galaxy from './Galaxy';
+import { Environment, Lightformer } from '@react-three/drei';
+import { EffectComposer, Bloom, DepthOfField, Noise, Vignette } from '@react-three/postprocessing';
+import Monolith from './Monolith';
 import FlyingCamera from './FlyingCamera';
+import Stars from './Stars';
+import { Suspense } from 'react';
 
 export default function Scene() {
   return (
-    <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#030303]">
+    <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black">
       <Canvas
-        camera={{ position: [0, 0, 30], fov: 75 }}
-        gl={{ antialias: true, alpha: false }}
-        dpr={[1, 2]}
+        camera={{ position: [0, 0, 30], fov: 45 }}
+        gl={{ antialias: false, powerPreference: "high-performance", alpha: false }}
+        dpr={[1, 1.5]}
       >
-        <color attach="background" args={['#030303']} />
-        
-        {/* Massive starfield background */}
-        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-        
-        {/* Dynamic Flying Camera linked to scroll */}
-        <FlyingCamera />
-        
-        {/* The interactive particle tunnel */}
-        <Galaxy />
-        
-        {/* Lighting */}
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} color="#88ccff" />
-        <pointLight position={[-10, -10, -10]} intensity={1} color="#ff3366" />
+        <color attach="background" args={['#000000']} />
+        <fog attach="fog" args={['#000000', 10, 40]} />
+
+        <Suspense fallback={null}>
+          {/* Cinematic Studio Lighting */}
+          <ambientLight intensity={0.2} />
+          <spotLight position={[20, 20, 10]} penumbra={1} castShadow angle={0.2} intensity={2} color="#c89d70" />
+          <spotLight position={[-20, -20, -10]} penumbra={1} castShadow angle={0.2} intensity={1} color="#ffffff" />
+          
+          <Environment resolution={256}>
+            <group rotation={[-Math.PI / 4, -0.3, 0]}>
+              <Lightformer intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} color="#ffffff" />
+              <Lightformer intensity={2} rotation-y={Math.PI / 2} position={[-5, 1, -1]} scale={[20, 0.1, 1]} color="#c89d70" />
+              <Lightformer intensity={2} rotation-y={Math.PI / 2} position={[5, 1, -1]} scale={[20, 0.1, 1]} color="#ffffff" />
+              <Lightformer intensity={2} rotation-y={-Math.PI / 2} position={[10, 1, 0]} scale={[20, 1, 1]} color="#c89d70" />
+            </group>
+          </Environment>
+
+          <Monolith />
+          <Stars />
+          <FlyingCamera />
+
+          {/* Heavy Cinematic Post-Processing */}
+          <EffectComposer disableNormalPass multisampling={0}>
+            <DepthOfField focusDistance={0.01} focalLength={0.05} bokehScale={5} />
+            <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.5} />
+            <Noise opacity={0.05} />
+            <Vignette eskil={false} offset={0.1} darkness={1.1} />
+          </EffectComposer>
+        </Suspense>
       </Canvas>
     </div>
   );

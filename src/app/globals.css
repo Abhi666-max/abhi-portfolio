@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #030303; /* Deep space black */
-  --text-primary: #ffffff; 
-  --accent: #88ccff; /* Electric blue glow */
+  --bg-primary: #000000; /* Pitch black */
+  --text-primary: #ffffff; /* Stark white */
+  --accent: #c89d70; /* Cinematic copper/gold */
 }
 
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
   cursor: none; 
 }
@@ -26,20 +26,14 @@ html.lenis, html.lenis body { height: auto; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* Cinematic utilities */
-.glow-text {
-  text-shadow: 0 0 20px rgba(136, 204, 255, 0.6), 0 0 40px rgba(136, 204, 255, 0.2);
+.cinematic-shadow {
+  text-shadow: 0px 4px 20px rgba(0,0,0,0.8);
 }
 
-.glow-box {
-  box-shadow: 0 0 30px rgba(136, 204, 255, 0.1), inset 0 0 20px rgba(136, 204, 255, 0.05);
-  border: 1px solid rgba(136, 204, 255, 0.2);
-  background: rgba(3, 3, 3, 0.6);
+.lux-border {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(10px);
 }
 
-.text-outline-glow {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
-  text-shadow: 0 0 30px rgba(255,255,255,0.3);
-}
 

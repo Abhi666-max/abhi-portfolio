@@ -1,11 +1,10 @@
 "use client";
 
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useEffect, useRef } from 'react';
 
 export default function FlyingCamera() {
-  const { camera } = useThree();
   const scrollYRef = useRef(0);
 
   useEffect(() => {
@@ -18,23 +17,26 @@ export default function FlyingCamera() {
   }, []);
 
   useFrame((state) => {
-    // Determine how deep the camera flies based on scroll
-    // Multiply by a factor to increase/decrease flying speed
-    const targetZ = 30 - scrollYRef.current * 0.02;
+    // Scroll progress drives the camera angle
+    // Maximum scroll height assumed around 5000-8000px depending on content
+    // We want a full 180 or 360 degree orbit over the entire scroll
+    const scrollFactor = scrollYRef.current * 0.001; 
+    
+    // Orbit Mathematics (Radius around the monolith)
+    const radius = 25;
+    const targetX = Math.sin(scrollFactor) * radius;
+    const targetZ = Math.cos(scrollFactor) * radius;
+    // Camera moves up/down slightly on scroll
+    const targetY = (Math.sin(scrollFactor * 2) * 5) + (state.pointer.y * 2);
     
     // Smoothly interpolate camera position
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.05);
+    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, targetX + (state.pointer.x * 2), 0.05);
+    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, targetY, 0.05);
+    state.camera.position.z = THREE.MathUtils.lerp(state.camera.position.z, targetZ, 0.05);
     
-    // Slight sway based on mouse pointer for a dynamic cinematic feel
-    const targetX = (state.pointer.x * 2);
-    const targetY = (state.pointer.y * 2);
-    
-    camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, 0.05);
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.05);
-    
-    // Look at center to give a panning effect
-    camera.lookAt(0, 0, targetZ - 10);
+    // Always look at the center of the Monolith
+    state.camera.lookAt(0, 0, 0);
   });
 
-  return null; // Logic only component
+  return null; 
 }

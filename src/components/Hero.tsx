@@ -84,7 +84,7 @@ export default function Hero() {
         style={{ y, opacity }}
         className="w-full px-6 flex flex-col items-center text-center z-10"
       >
-        <div ref={subtitleRef} className="text-[var(--accent)] font-mono text-sm md:text-base tracking-[0.3em] uppercase mb-6 flex items-center gap-4 glow-text">
+        <div ref={subtitleRef} className="text-[var(--accent)] font-mono text-sm md:text-base tracking-[0.3em] uppercase mb-6 flex items-center gap-4 cinematic-shadow">
           <span className="w-8 h-[1px] bg-[var(--accent)] block" />
           {portfolioData.profile.title}
           <span className="w-8 h-[1px] bg-[var(--accent)] block" />
@@ -92,7 +92,7 @@ export default function Hero() {
         
         <h1 
           ref={titleRef}
-          className="text-6xl md:text-8xl lg:text-[12vw] font-bold uppercase leading-none tracking-tighter text-white glow-text mix-blend-screen"
+          className="text-6xl md:text-8xl lg:text-[12vw] font-bold uppercase leading-none tracking-tighter text-white cinematic-shadow mix-blend-screen"
           style={{ fontFamily: 'var(--font-syncopate)' }}
         >
           {portfolioData.profile.name.split(' ')[0]}
