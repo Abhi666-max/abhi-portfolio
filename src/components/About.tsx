@@ -21,7 +21,7 @@ export default function About() {
           [01] // About
         </h2>
         <div className="text-2xl md:text-5xl font-bold leading-tight uppercase text-white glow-text" style={{ fontFamily: 'var(--font-syncopate)' }}>
-          {portfolioData.about.split('.').map((sentence, i) => (
+          {portfolioData.profile.bio.split('.').map((sentence: string, i: number) => (
             sentence.trim() && (
               <span key={i} className="block mb-4">
                 {sentence.trim()}.

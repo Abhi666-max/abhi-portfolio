@@ -38,9 +38,24 @@ export default function MenuOverlay({ onClose }: { onClose: () => void }) {
               >
                 {link.name}
               </motion.a>
-            </a>
-          </motion.div>
+            </Magnetic>
+          ))}
         </div>
+
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="flex gap-8 text-[var(--accent)] font-mono text-sm glow-text"
+        >
+          {Object.entries(portfolioData.profile.socials).map(([name, url]) => (
+            <Magnetic key={name} strength={20}>
+              <a href={url} target="_blank" rel="noreferrer" className="hover-target hover:text-white transition-colors p-2 -m-2 uppercase tracking-widest">
+                {name}
+              </a>
+            </Magnetic>
+          ))}
+        </motion.div>
       </div>
     </motion.div>
   );
