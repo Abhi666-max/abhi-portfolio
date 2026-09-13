@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 const vertexShader = `
@@ -119,6 +119,7 @@ void main() {
 
 export default function ShaderBackground() {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const { viewport } = useThree();
 
   const uniforms = useMemo(
     () => ({
@@ -136,7 +137,7 @@ export default function ShaderBackground() {
 
   return (
     <mesh>
-      <planeGeometry args={[2, 2]} />
+      <planeGeometry args={[viewport.width, viewport.height]} />
       <shaderMaterial
         ref={materialRef}
         vertexShader={vertexShader}

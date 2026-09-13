@@ -2,9 +2,9 @@
 
 import { useRef, useEffect } from 'react';
 import { portfolioData } from '@/data/mockData';
+import { ExternalLink } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { ExternalLink } from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -12,65 +12,53 @@ if (typeof window !== 'undefined') {
 
 export default function Projects() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !scrollWrapperRef.current) return;
+    if (!containerRef.current) return;
 
-    const sections = gsap.utils.toArray('.project-panel');
+    // Simple parallax effect for images
+    const images = gsap.utils.toArray<HTMLElement>('.project-image-inner');
     
-    // Calculate total width to scroll
-    const totalWidth = scrollWrapperRef.current.scrollWidth - window.innerWidth;
-
-    const st = gsap.to(sections, {
-      x: -totalWidth,
-      ease: "none",
-      scrollTrigger: {
-        trigger: containerRef.current,
-        pin: true,
-        scrub: 1,
-        snap: 1 / (sections.length - 1),
-        end: () => `+=${totalWidth}`,
-      }
+    images.forEach((img) => {
+      gsap.to(img, {
+        yPercent: 20,
+        ease: "none",
+        scrollTrigger: {
+          trigger: img.parentElement,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        }
+      });
     });
-
-    return () => {
-      st.kill();
-    };
   }, []);
 
   return (
-    <section id="projects" ref={containerRef} className="relative w-full h-screen bg-[#030303] z-10 overflow-hidden">
-      
-      <div className="absolute top-12 left-6 md:left-20 z-20 mix-blend-difference pointer-events-none">
-        <h2 className="text-sm font-mono tracking-widest uppercase text-white">
+    <section id="projects" ref={containerRef} className="relative w-full py-32 px-6 md:px-20 z-10 text-white">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-sm font-mono tracking-widest uppercase text-[#88ccff] mb-20">
           [03] // Deployed Systems
         </h2>
-      </div>
 
-      <div ref={scrollWrapperRef} className="flex h-full w-max">
-        {portfolioData.projects.map((project, i) => (
-          <div 
-            key={project.id} 
-            className="project-panel w-screen h-full flex flex-col justify-center items-center p-6 md:p-20 relative"
-          >
-            <div className="w-full max-w-6xl flex flex-col md:flex-row items-center gap-12 z-10">
+        <div className="flex flex-col gap-32">
+          {portfolioData.projects.map((project, i) => (
+            <div key={project.id} className="flex flex-col md:flex-row items-center gap-12 group">
               
               {/* Image Container with Parallax inner image */}
-              <div className="w-full md:w-3/5 h-[40vh] md:h-[60vh] relative overflow-hidden group rounded-lg">
+              <div className="w-full md:w-[60%] h-[50vh] md:h-[70vh] relative overflow-hidden rounded-xl border border-white/10 glass">
                 <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-[1.5s] ease-out group-hover:scale-110"
+                  className="project-image-inner absolute -inset-[20%] bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
                   style={{ backgroundImage: `url(${project.image})` }}
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-700" />
+                <div className="absolute inset-0 bg-[#030303]/40 group-hover:bg-transparent transition-colors duration-700" />
               </div>
 
               {/* Text Content */}
-              <div className="w-full md:w-2/5 flex flex-col items-start justify-center">
+              <div className="w-full md:w-[40%] flex flex-col items-start justify-center">
                 <div className="text-[#88ccff] font-mono text-sm mb-4">
                   0{i + 1} &mdash; {project.category}
                 </div>
-                <h3 className="text-4xl md:text-6xl font-bold uppercase mb-6" style={{ fontFamily: 'var(--font-syncopate)' }}>
+                <h3 className="text-4xl md:text-5xl font-bold uppercase mb-6" style={{ fontFamily: 'var(--font-syncopate)' }}>
                   {project.title}
                 </h3>
                 <p className="text-white/60 mb-8 font-light text-lg">
@@ -86,17 +74,17 @@ export default function Projects() {
                 
                 <a 
                   href={project.link} 
-                  className="hover-target group flex items-center gap-4 text-sm font-mono uppercase tracking-widest hover:text-[#88ccff] transition-colors"
+                  className="hover-target group/btn flex items-center gap-4 text-sm font-mono uppercase tracking-widest hover:text-[#88ccff] transition-colors"
                 >
-                  <span className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center group-hover:border-[#88ccff] transition-colors">
+                  <span className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center group-hover/btn:border-[#88ccff] transition-colors">
                     <ExternalLink size={16} />
                   </span>
                   View Project
                 </a>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
