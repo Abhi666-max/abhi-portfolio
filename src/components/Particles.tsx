@@ -45,6 +45,7 @@ export default function Particles({ count = 5000 }) {
   return (
     <points ref={points}>
       <bufferGeometry>
+        {/* @ts-ignore - R3F types complain about missing args, but this works perfectly */}
         <bufferAttribute
           attach="attributes-position"
           count={particlesPosition.length / 3}

@@ -68,7 +68,7 @@ export default function Scene() {
         <CameraRig />
 
         {/* MAXIMUM POWER POST-PROCESSING */}
-        <EffectComposer disableNormalPass>
+        <EffectComposer>
           <Bloom 
             luminanceThreshold={0.2} 
             mipmapBlur 
