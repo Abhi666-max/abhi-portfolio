@@ -9,7 +9,7 @@ export default function Experience() {
   return (
     <section id="experience" ref={containerRef} className="relative w-full py-32 px-6 md:px-20 z-10 pointer-events-none">
       <div className="max-w-5xl mx-auto pointer-events-auto">
-        <h2 className="text-sm font-mono tracking-widest uppercase text-[var(--accent)] mb-20 glow-text">
+        <h2 className="text-sm font-mono tracking-widest uppercase text-[var(--accent)] mb-20 cinematic-shadow">
           [02] // Experience
         </h2>
 
@@ -17,13 +17,13 @@ export default function Experience() {
           {portfolioData.experience.map((exp, i) => (
             <div 
               key={exp.id} 
-              className="group flex flex-col md:flex-row justify-between items-start md:items-center py-12 border-t border-[var(--accent)]/30 hover:bg-[var(--accent)]/10 transition-colors px-4 glow-box cursor-none"
+              className="group flex flex-col md:flex-row justify-between items-start md:items-center py-12 border-t border-[var(--accent)]/20 hover:bg-white/5 transition-colors px-4 cursor-none"
             >
               <div className="flex flex-col w-full md:w-1/3">
                 <span className="font-mono text-sm text-[var(--accent)] mb-2">
                   {exp.period}
                 </span>
-                <h3 className="text-3xl font-bold uppercase text-white glow-text" style={{ fontFamily: 'var(--font-syncopate)' }}>
+                <h3 className="text-3xl font-bold uppercase text-white cinematic-shadow" style={{ fontFamily: 'var(--font-syncopate)' }}>
                   {exp.role}
                 </h3>
               </div>

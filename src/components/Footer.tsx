@@ -10,21 +10,21 @@ export default function Footer() {
       <div className="w-full max-w-7xl px-6 md:px-12 flex flex-col items-center relative z-10 pointer-events-auto">
         
         <div className="text-center mb-16 w-full">
-          <h2 className="text-5xl md:text-8xl lg:text-[10vw] font-bold uppercase tracking-tighter text-white glow-text" style={{ fontFamily: 'var(--font-syncopate)', lineHeight: '0.9' }}>
+          <h2 className="text-5xl md:text-8xl lg:text-[10vw] font-bold uppercase tracking-tighter text-white cinematic-shadow" style={{ fontFamily: 'var(--font-syncopate)', lineHeight: '0.9' }}>
             Let's Make
           </h2>
-          <h2 className="text-5xl md:text-8xl lg:text-[10vw] font-bold uppercase tracking-tighter text-transparent mt-2 text-outline-glow" style={{ fontFamily: 'var(--font-syncopate)', lineHeight: '0.9' }}>
+          <h2 className="text-5xl md:text-8xl lg:text-[10vw] font-bold uppercase tracking-tighter text-transparent mt-2" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.3)', fontFamily: 'var(--font-syncopate)', lineHeight: '0.9' }}>
             Something
           </h2>
         </div>
 
-        <div className="w-full h-[1px] bg-[var(--accent)]/30 my-10 glow-box" />
+        <div className="w-full h-[1px] bg-[var(--accent)]/20 my-10 cinematic-shadow" />
 
         <div className="w-full flex flex-col md:flex-row justify-between items-center gap-8 font-mono text-sm text-white">
           
           <div className="flex gap-8 z-20">
             <Magnetic strength={30}>
-              <a href={`mailto:${portfolioData.profile.email}`} className="hover-target hover:text-[var(--accent)] transition-colors uppercase tracking-widest font-bold p-4 -m-4 glow-text">
+              <a href={`mailto:${portfolioData.profile.email}`} className="hover-target hover:text-[var(--accent)] transition-colors uppercase tracking-widest font-bold p-4 -m-4 cinematic-shadow">
                 {portfolioData.profile.email}
               </a>
             </Magnetic>
@@ -37,7 +37,7 @@ export default function Footer() {
                   href={url}
                   target="_blank"
                   rel="noreferrer"
-                  className="hover-target uppercase tracking-widest opacity-60 hover:opacity-100 hover:text-[var(--accent)] transition-all p-4 -m-4 glow-text"
+                  className="hover-target uppercase tracking-widest opacity-60 hover:opacity-100 hover:text-[var(--accent)] transition-all p-4 -m-4 cinematic-shadow"
                 >
                   {name}
                 </a>
