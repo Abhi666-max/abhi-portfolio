@@ -1,17 +1,21 @@
 "use client";
 
 import { Canvas } from '@react-three/fiber';
-import ShaderBackground from './ShaderBackground';
+import { Environment } from '@react-three/drei';
+import GlassObject from './GlassObject';
 
 export default function Scene() {
   return (
-    <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#030303]">
+    <div className="fixed inset-0 w-full h-full z-20 pointer-events-none">
       <Canvas
-        dpr={[1, 1.5]}
-        gl={{ antialias: false, powerPreference: "high-performance" }}
-        camera={{ position: [0, 0, 5], fov: 75 }}
+        dpr={[1, 2]}
+        gl={{ antialias: true, powerPreference: "high-performance" }}
+        camera={{ position: [0, 0, 8], fov: 45 }}
       >
-        <ShaderBackground />
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[10, 10, 10]} intensity={1} />
+        <Environment preset="city" />
+        <GlassObject />
       </Canvas>
     </div>
   );
