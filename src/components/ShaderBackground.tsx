@@ -98,20 +98,20 @@ void main() {
   float noise2 = cnoise(vec3(uv * 2.0 + noise, uTime * 0.15));
   float noise3 = cnoise(vec3(uv * 4.0 - noise2, uTime * 0.1));
   
-  // Premium Agency Colors: Deep Violet, Electric Blue, Soft Pink, Dark Background
-  vec3 color1 = vec3(0.05, 0.0, 0.15); // Deep Dark Violet
-  vec3 color2 = vec3(0.1, 0.4, 0.9);   // Electric Blue
-  vec3 color3 = vec3(0.8, 0.2, 0.6);   // Soft Pink
-  vec3 color4 = vec3(0.01, 0.01, 0.03); // Almost black
+  // Premium Agency Colors: Vibrant and Bright
+  vec3 color1 = vec3(0.4, 0.1, 0.9); // Electric Purple
+  vec3 color2 = vec3(0.1, 0.6, 1.0); // Bright Blue
+  vec3 color3 = vec3(1.0, 0.2, 0.5); // Neon Pink
+  vec3 color4 = vec3(0.05, 0.05, 0.1); // Deep space blue/black for contrast
   
   // Blend colors organically
-  vec3 finalColor = mix(color4, color1, smoothstep(0.0, 1.0, noise3));
-  finalColor = mix(finalColor, color2, smoothstep(0.2, 0.8, noise));
-  finalColor = mix(finalColor, color3, smoothstep(0.5, 1.0, noise2));
+  vec3 finalColor = mix(color4, color1, smoothstep(0.1, 0.9, noise3));
+  finalColor = mix(finalColor, color2, smoothstep(0.3, 0.7, noise));
+  finalColor = mix(finalColor, color3, smoothstep(0.6, 1.0, noise2));
   
-  // Add subtle vignette
-  float vignette = length(uv - 0.5) * 1.5;
-  finalColor = mix(finalColor, vec3(0.0), vignette * 0.6);
+  // Very subtle vignette just for edges
+  float vignette = length(uv - 0.5);
+  finalColor = mix(finalColor, vec3(0.0), vignette * 0.4);
 
   gl_FragColor = vec4(finalColor, 1.0);
 }
