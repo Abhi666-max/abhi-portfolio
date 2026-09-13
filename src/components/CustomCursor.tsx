@@ -62,27 +62,13 @@ export default function CustomCursor() {
 
   return (
     <>
-        }}
+      <div 
+        ref={cursorRef} 
+        className="fixed top-0 left-0 w-8 h-8 -ml-4 -mt-4 rounded-full border border-[#ff3333] pointer-events-none z-[9999]"
       />
-      <motion.div
-        className="fixed top-0 left-0 w-16 h-16 rounded-full pointer-events-none z-[9998]"
-        style={{
-          border: '1px solid rgba(255, 255, 255, 0.15)',
-          background: 'radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%)',
-          backdropFilter: 'blur(1px)'
-        }}
-        animate={{
-          x: mousePosition.x - 32,
-          y: mousePosition.y - 32,
-          scale: isHovered ? 1.5 : 1,
-          opacity: isVisible ? (isHovered ? 0 : 1) : 0
-        }}
-        transition={{
-          type: 'spring',
-          stiffness: 80,
-          damping: 15,
-          mass: 0.8
-        }}
+      <div 
+        ref={dotRef}
+        className="fixed top-0 left-0 w-2 h-2 -ml-1 -mt-1 rounded-full bg-[#111111] pointer-events-none z-[9999]"
       />
     </>
   );
