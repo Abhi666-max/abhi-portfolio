@@ -5,6 +5,7 @@ import { portfolioData } from '@/data/mockData';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { ExternalLink } from 'lucide-react';
+import ScrambleText from './ScrambleText';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -13,19 +14,35 @@ if (typeof window !== 'undefined') {
 export default function Projects() {
   const containerRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
+  const maskRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Parallax effect for images
     imagesRef.current.forEach((img, i) => {
-      if (!img) return;
+      if (!img || !maskRefs.current[i]) return;
       
-      gsap.fromTo(img, 
-        { y: -100 },
+      // Aggressive Clip-Path Reveal
+      gsap.fromTo(maskRefs.current[i],
+        { clipPath: 'polygon(0 50%, 100% 50%, 100% 50%, 0 50%)' },
         {
-          y: 100,
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          ease: "expo.out",
+          duration: 1.5,
+          scrollTrigger: {
+            trigger: maskRefs.current[i],
+            start: "top 80%",
+          }
+        }
+      );
+
+      // Deep Parallax effect
+      gsap.fromTo(img, 
+        { y: -150, scale: 1.2 },
+        {
+          y: 150,
+          scale: 1,
           ease: "none",
           scrollTrigger: {
-            trigger: img.parentElement,
+            trigger: maskRefs.current[i],
             start: "top bottom",
             end: "bottom top",
             scrub: true,
@@ -40,14 +57,17 @@ export default function Projects() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col gap-32">
         
         <h2 className="text-sm font-mono tracking-widest uppercase opacity-50 mb-12">
-          [03] // Selected Work
+          <ScrambleText text="[03] // Selected Work" />
         </h2>
 
         {portfolioData.projects.map((project, i) => (
           <div key={project.id} className="relative w-full flex flex-col md:flex-row gap-12 items-center group">
             
-            {/* Image Container with Parallax inner */}
-            <div className="w-full md:w-2/3 h-[50vh] md:h-[80vh] overflow-hidden relative hover-target">
+            {/* Image Container with Clip Path & Parallax */}
+            <div 
+              ref={el => { maskRefs.current[i] = el; }}
+              className="w-full md:w-2/3 h-[50vh] md:h-[80vh] overflow-hidden relative hover-target"
+            >
               <a href={project.link} target="_blank" rel="noreferrer" className="block w-full h-full cursor-none">
                 <div 
                   ref={el => { imagesRef.current[i] = el; }}

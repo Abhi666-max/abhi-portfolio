@@ -5,6 +5,8 @@ import { portfolioData } from '@/data/mockData';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
+import ScrambleText from './ScrambleText';
+
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -38,7 +40,7 @@ export default function Experience() {
         
         <div className="w-full md:w-1/4">
           <h2 className="text-sm font-mono tracking-widest uppercase opacity-50 sticky top-32">
-            [02] // Experience
+            <ScrambleText text="[02] // Experience" />
           </h2>
         </div>
 
