@@ -2,69 +2,42 @@
 
 import { motion } from 'framer-motion';
 import { portfolioData } from '@/data/mockData';
+import { Github, Twitter, Linkedin } from 'lucide-react';
+import Magnetic from './Magnetic';
 
 const menuLinks = [
-  { name: 'Home', href: '#' },
-  { name: 'Work', href: '#projects' },
+  { name: 'Home', href: '#scroll-container' },
   { name: 'About', href: '#about' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Experience', href: '#experience' },
+  { name: 'Projects', href: '#projects' },
 ];
 
 export default function MenuOverlay({ onClose }: { onClose: () => void }) {
   return (
     <motion.div
-      initial={{ opacity: 0, clipPath: 'circle(0% at 100% 0)' }}
-      animate={{ opacity: 1, clipPath: 'circle(150% at 100% 0)' }}
-      exit={{ opacity: 0, clipPath: 'circle(0% at 100% 0)' }}
-      transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-      className="fixed inset-0 w-full h-screen bg-[#e6e6e6] z-[90] flex flex-col justify-center px-12 md:px-32 text-[#111111]"
+      initial={{ clipPath: 'inset(0% 0% 100% 0%)' }}
+      animate={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+      exit={{ clipPath: 'inset(0% 0% 100% 0%)' }}
+      transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-xl"
     >
-      <div className="absolute inset-0 grid-lines opacity-20 pointer-events-none" />
-
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end h-full py-32 relative z-10">
-        
-        <div className="flex flex-col gap-4 md:gap-8">
-          {menuLinks.map((link, index) => (
-            <div key={link.name} className="overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none glow-box opacity-50" />
+      
+      <div className="flex flex-col items-center gap-12 z-10">
+        <div className="flex flex-col items-center gap-4">
+          {menuLinks.map((link, i) => (
+            <Magnetic key={link.name} strength={30}>
               <motion.a
                 href={link.href}
                 onClick={onClose}
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 1, delay: 0.3 + index * 0.1, ease: [0.76, 0, 0.24, 1] }}
-                className="text-6xl md:text-8xl font-bold uppercase tracking-tighter hover-target hover:text-[#ff3333] transition-colors duration-500"
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
+                className="hover-target text-5xl md:text-8xl font-bold uppercase tracking-tighter text-transparent text-outline-glow hover:text-white transition-all p-4 -m-4"
                 style={{ fontFamily: 'var(--font-syncopate)' }}
               >
                 {link.name}
               </motion.a>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex flex-col gap-12 mt-12 md:mt-0 opacity-60">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 1 }}
-          >
-            <h4 className="text-sm font-mono tracking-widest uppercase mb-4 opacity-50">Socials</h4>
-            <div className="flex flex-col gap-2 font-mono">
-              {Object.entries(portfolioData.profile.socials).map(([name, url]) => (
-                <a key={name} href={url} className="hover-target hover:text-[#ff3333] transition-colors capitalize">
-                  {name}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 1 }}
-          >
-            <h4 className="text-sm font-mono tracking-widest uppercase mb-4 opacity-50">Email</h4>
-            <a href={`mailto:${portfolioData.profile.email}`} className="font-mono hover-target hover:text-[#ff3333] transition-colors">
-              {portfolioData.profile.email}
             </a>
           </motion.div>
         </div>
