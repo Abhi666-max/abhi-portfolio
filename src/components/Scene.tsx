@@ -1,11 +1,10 @@
 "use client";
 
 import { Canvas } from '@react-three/fiber';
-import { Environment, Lightformer } from '@react-three/drei';
+import { Environment, Lightformer, Stars } from '@react-three/drei';
 import { EffectComposer, Bloom, DepthOfField, Noise, Vignette } from '@react-three/postprocessing';
 import Monolith from './Monolith';
 import FlyingCamera from './FlyingCamera';
-import Stars from './Stars';
 import { Suspense } from 'react';
 
 export default function Scene() {
