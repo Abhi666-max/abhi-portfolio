@@ -1,24 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { portfolioData } from '@/data/mockData';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export default function Experience() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
-  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    
-    const items = gsap.utils.toArray<HTMLElement>('.exp-item');
-    
   
   return (
     <section id="experience" ref={containerRef} className="relative w-full py-32 px-6 md:px-20 z-10 pointer-events-none">
@@ -31,7 +17,7 @@ export default function Experience() {
           {portfolioData.experience.map((exp, i) => (
             <div 
               key={exp.id} 
-              className="group flex flex-col md:flex-row justify-between items-start md:items-center py-12 border-t border-[var(--accent)]/30 hover:bg-[var(--accent)]/10 transition-colors px-4 glow-box"
+              className="group flex flex-col md:flex-row justify-between items-start md:items-center py-12 border-t border-[var(--accent)]/30 hover:bg-[var(--accent)]/10 transition-colors px-4 glow-box cursor-none"
             >
               <div className="flex flex-col w-full md:w-1/3">
                 <span className="font-mono text-sm text-[var(--accent)] mb-2">
