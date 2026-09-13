@@ -38,7 +38,7 @@ export default function Scene() {
           <FlyingCamera />
 
           {/* Heavy Cinematic Post-Processing */}
-          <EffectComposer disableNormalPass multisampling={0}>
+          <EffectComposer multisampling={0}>
             <DepthOfField focusDistance={0.01} focalLength={0.05} bokehScale={5} />
             <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.5} />
             <Noise opacity={0.05} />
