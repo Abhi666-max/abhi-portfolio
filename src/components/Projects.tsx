@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { portfolioData } from '@/data/mockData';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { ExternalLink } from 'lucide-react';
-import ScrambleText from './ScrambleText';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -53,11 +52,11 @@ export default function Projects() {
   }, []);
 
   return (
-    <section id="projects" ref={containerRef} className="relative w-full py-32 bg-black text-white">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col gap-32">
+    <section id="projects" ref={containerRef} className="relative w-full py-32 text-white bg-transparent">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col gap-32 relative z-10">
         
-        <h2 className="text-sm font-mono tracking-widest uppercase opacity-50 mb-12">
-          <ScrambleText text="[03] // Selected Work" />
+        <h2 className="text-xs font-sans tracking-[0.3em] uppercase text-[#c89d70] mb-12">
+          CHAPTER III &mdash; THE ARCHIVES
         </h2>
 
         {portfolioData.projects.map((project, i) => (

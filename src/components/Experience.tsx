@@ -5,8 +5,6 @@ import { portfolioData } from '@/data/mockData';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
-import ScrambleText from './ScrambleText';
-
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -35,12 +33,12 @@ export default function Experience() {
   }, []);
 
   return (
-    <section id="experience" ref={containerRef} className="relative w-full py-32 bg-black text-white px-6 md:px-20">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-20">
+    <section id="experience" ref={containerRef} className="relative w-full py-32 text-white px-6 md:px-20 bg-transparent">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-20 relative z-10">
         
         <div className="w-full md:w-1/4">
-          <h2 className="text-sm font-mono tracking-widest uppercase opacity-50 sticky top-32">
-            <ScrambleText text="[02] // Experience" />
+          <h2 className="text-xs font-sans tracking-[0.3em] uppercase text-[#c89d70] sticky top-32">
+            CHAPTER II &mdash; THE JOURNEY
           </h2>
         </div>
 
@@ -49,13 +47,13 @@ export default function Experience() {
             <div 
               key={exp.id} 
               ref={el => { itemsRef.current[i] = el; }}
-              className="group flex flex-col py-12 border-t border-white/20 hover:border-white transition-colors cursor-none hover-target"
+              className="group flex flex-col py-12 border-t border-[#c89d70]/20 hover:border-[#c89d70] transition-colors cursor-none hover-target"
             >
               <div className="flex flex-col md:flex-row justify-between md:items-end mb-8">
-                <h3 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter transition-colors group-hover:text-white text-white/70" style={{ fontFamily: 'var(--font-syncopate)' }}>
+                <h3 className="text-4xl md:text-5xl font-serif tracking-widest transition-colors group-hover:text-white text-white/70" style={{ fontFamily: 'var(--font-playfair)' }}>
                   {exp.role}
                 </h3>
-                <span className="font-mono text-sm opacity-50 mt-4 md:mt-0">
+                <span className="font-sans text-xs opacity-50 mt-4 md:mt-0 uppercase tracking-widest text-[#c89d70]">
                   {exp.period}
                 </span>
               </div>

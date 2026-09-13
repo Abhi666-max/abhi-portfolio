@@ -5,8 +5,6 @@ import { portfolioData } from '@/data/mockData';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
-import ScrambleText from './ScrambleText';
-
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -38,20 +36,20 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" ref={containerRef} className="relative w-full py-48 bg-black text-white px-6 md:px-20">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-20">
+    <section id="about" ref={containerRef} className="relative w-full py-48 text-white px-6 md:px-20 bg-transparent">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-20 relative z-10">
         
         <div className="w-full md:w-1/4">
-          <h2 className="text-sm font-mono tracking-widest uppercase opacity-50 sticky top-32">
-            <ScrambleText text="[01] // About" />
+          <h2 className="text-xs font-sans tracking-[0.3em] uppercase text-[#c89d70] sticky top-32">
+            CHAPTER I &mdash; THE ARCHITECT
           </h2>
         </div>
 
         <div className="w-full md:w-3/4">
-          <div ref={textRef} className="text-3xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tighter" style={{ fontFamily: 'var(--font-syncopate)' }}>
+          <div ref={textRef} className="text-3xl md:text-5xl lg:text-7xl font-serif leading-[1.2]" style={{ fontFamily: 'var(--font-playfair)' }}>
             {portfolioData.profile.bio.split('.').map((sentence: string, i: number) => (
               sentence.trim() && (
-                <span key={i} className="block mb-6 md:mb-10 text-white/90">
+                <span key={i} className="block mb-6 md:mb-10 text-white/90 drop-shadow-lg">
                   {sentence.trim()}.
                 </span>
               )
