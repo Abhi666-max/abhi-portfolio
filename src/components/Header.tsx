@@ -36,7 +36,7 @@ export default function Header() {
         className="fixed top-0 left-0 w-full px-6 md:px-12 py-6 flex justify-between items-center z-[100] pointer-events-none"
       >
         <Magnetic strength={20}>
-          <div className="font-bold text-xl uppercase tracking-widest pointer-events-auto cursor-none hover-target text-[#111111] p-4 -m-4" style={{ fontFamily: 'var(--font-syncopate)' }}>
+          <div className="font-bold text-xl uppercase tracking-widest pointer-events-auto cursor-none hover-target text-white glow-text p-4 -m-4" style={{ fontFamily: 'var(--font-syncopate)' }}>
             {portfolioData.profile.name.split(' ')[0]}©
           </div>
         </Magnetic>
@@ -44,12 +44,12 @@ export default function Header() {
         <Magnetic strength={40}>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="pointer-events-auto hover-target flex items-center gap-3 group text-[#111111] p-4 -m-4"
+            className="pointer-events-auto hover-target flex items-center gap-3 group text-white p-4 -m-4"
           >
-            <span className="uppercase text-sm tracking-widest font-mono hidden md:block">
+            <span className="uppercase text-sm tracking-widest font-mono hidden md:block glow-text">
               {isOpen ? 'CLOSE' : 'MENU'}
             </span>
-            <div className="relative w-12 h-12 rounded-full border border-[#111111]/30 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:bg-[#111111] group-hover:text-white">
+            <div className="relative w-12 h-12 rounded-full border border-[var(--accent)]/50 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:bg-[var(--accent)] group-hover:text-black glow-box">
               <div className="flex flex-col gap-[4px]">
                 <motion.div 
                   animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 5 : 0 }}

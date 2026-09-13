@@ -70,36 +70,43 @@ export default function Hero() {
   }, []);
 
   return (
-    <motion.section 
-      ref={containerRef}
-      style={{ opacity }}
-      className="relative h-screen w-full flex flex-col items-center justify-center z-10 pointer-events-none"
-    >
-      {/* Background grid lines for Brutalist architectural feel */}
-      <div className="absolute inset-0 grid-lines opacity-50" />
+    <section ref={containerRef} className="relative w-full h-screen flex flex-col items-center justify-center pointer-events-none">
+      
+      {/* HUD Crosshairs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-0 w-8 h-[1px] bg-[var(--accent)]/50" />
+        <div className="absolute top-1/2 right-0 w-8 h-[1px] bg-[var(--accent)]/50" />
+        <div className="absolute top-0 left-1/2 w-[1px] h-8 bg-[var(--accent)]/50" />
+        <div className="absolute bottom-0 left-1/2 w-[1px] h-8 bg-[var(--accent)]/50" />
+      </div>
 
-      <motion.div style={{ y }} className="text-center pointer-events-auto flex flex-col items-center z-10">
+      <motion.div 
+        style={{ y, opacity }}
+        className="w-full px-6 flex flex-col items-center text-center z-10"
+      >
+        <div ref={subtitleRef} className="text-[var(--accent)] font-mono text-sm md:text-base tracking-[0.3em] uppercase mb-6 flex items-center gap-4 glow-text">
+          <span className="w-8 h-[1px] bg-[var(--accent)] block" />
+          {portfolioData.profile.role}
+          <span className="w-8 h-[1px] bg-[var(--accent)] block" />
+        </div>
+        
         <h1 
           ref={titleRef}
-          className="text-[12vw] font-bold leading-[0.8] tracking-tighter uppercase text-[#111111]" 
+          className="text-6xl md:text-8xl lg:text-[12vw] font-bold uppercase leading-none tracking-tighter text-white glow-text mix-blend-screen"
           style={{ fontFamily: 'var(--font-syncopate)' }}
         >
-          {portfolioData.profile.name.split(' ')[0]}<br/>
-          <span className="text-transparent text-outline-dark">
-            {portfolioData.profile.name.split(' ')[1]}
-          </span>
+          {portfolioData.profile.name.split(' ')[0]}
         </h1>
-        
-        <div 
-          ref={subtitleRef}
-          className="mt-12 flex flex-col items-center gap-4 text-sm font-mono tracking-widest uppercase text-[#111111]"
-        >
-          <p>{portfolioData.profile.title}</p>
-          <div className="w-12 h-[1px] bg-[#111111]" />
-        </div>
-      </motion.div>
-    </motion.section>
-  );
-}
 
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.5, duration: 2 }}
+          className="mt-12 text-sm md:text-lg text-[var(--accent)]/80 max-w-lg mx-auto font-mono text-center leading-relaxed"
+        >
+          {portfolioData.profile.bio}
+        </motion.p>
+      </motion.div>
+    </section>
+  );
 

@@ -15,13 +15,13 @@ export default function Home() {
   return (
     <>
       <Preloader />
-      <main id="scroll-container" className="relative w-full overflow-hidden bg-transparent selection:bg-[#ff3333] selection:text-[#e6e6e6]">
+      <main id="scroll-container" className="relative w-full overflow-hidden bg-transparent selection:bg-[#ff3366] selection:text-white">
         
-        {/* 3D WebGL Glass Object */}
+        {/* 3D WebGL Universe Layer (Behind everything) */}
         <Scene />
 
-        {/* Foreground UI Layer */}
-        <div className="relative z-10 w-full">
+        {/* Foreground UI HUD Layer */}
+        <div className="relative z-10 w-full pointer-events-none">
           <Hero />
           <About />
           <Experience />

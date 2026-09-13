@@ -59,7 +59,7 @@ export default function Projects() {
   return (
     <section id="projects" ref={containerRef} className="relative w-full h-screen overflow-hidden bg-transparent z-10 pointer-events-none">
       <div className="absolute top-12 left-6 md:left-20 pointer-events-auto">
-        <h2 className="text-sm font-mono tracking-widest uppercase text-[#ff3333]">
+        <h2 className="text-sm font-mono tracking-widest uppercase text-[var(--accent)] glow-text">
           [03] // Deployed Systems
         </h2>
       </div>
@@ -68,26 +68,27 @@ export default function Projects() {
         {portfolioData.projects.map((project, i) => (
           <div key={project.id} className="project-slide w-[100vw] h-full flex flex-col md:flex-row items-center justify-center gap-12 px-6 md:px-32">
             
-            <div className="w-full md:w-[50%] h-[40vh] md:h-[60vh] relative overflow-hidden border border-[#111111]">
+            <div className="w-full md:w-[50%] h-[40vh] md:h-[60vh] relative overflow-hidden glow-box rounded-xl">
               <div 
-                className="project-image-inner absolute -inset-4 bg-cover bg-center"
+                className="project-image-inner absolute -inset-4 bg-cover bg-center opacity-80"
                 style={{ backgroundImage: `url(${project.image})` }}
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent opacity-80" />
             </div>
 
-            <div className="w-full md:w-[40%] flex flex-col items-start justify-center text-[#111111]">
-              <div className="text-[#ff3333] font-mono text-sm mb-4 font-bold">
+            <div className="w-full md:w-[40%] flex flex-col items-start justify-center text-white">
+              <div className="text-[var(--accent)] font-mono text-sm mb-4 font-bold glow-text">
                 0{i + 1} &mdash; {project.category}
               </div>
-              <h3 className="text-5xl md:text-7xl font-bold uppercase mb-6" style={{ fontFamily: 'var(--font-syncopate)' }}>
+              <h3 className="text-5xl md:text-7xl font-bold uppercase mb-6 glow-text" style={{ fontFamily: 'var(--font-syncopate)' }}>
                 {project.title}
               </h3>
-              <p className="opacity-80 mb-8 font-mono text-sm max-w-md">
+              <p className="text-[var(--accent)]/80 mb-8 font-mono text-sm max-w-md leading-relaxed">
                 {project.description}
               </p>
               <div className="flex flex-wrap gap-3 mb-10 max-w-md">
                 {project.tech.map(t => (
-                  <span key={t} className="px-3 py-1 border border-[#111111] text-xs font-mono uppercase">
+                  <span key={t} className="px-3 py-1 border border-[var(--accent)]/30 bg-[var(--accent)]/10 text-[var(--accent)] text-xs font-mono uppercase glow-box">
                     {t}
                   </span>
                 ))}
@@ -95,9 +96,9 @@ export default function Projects() {
               
               <a 
                 href={project.link} 
-                className="hover-target group/btn flex items-center gap-4 text-sm font-mono uppercase tracking-widest hover:text-[#ff3333] transition-colors"
+                className="hover-target group/btn flex items-center gap-4 text-sm font-mono uppercase tracking-widest text-[var(--accent)] hover:text-white transition-colors"
               >
-                <span className="w-10 h-10 rounded-full border border-[#111111] flex items-center justify-center group-hover/btn:border-[#ff3333] transition-colors">
+                <span className="w-10 h-10 rounded-full border border-[var(--accent)]/50 flex items-center justify-center group-hover/btn:border-white transition-colors glow-box group-hover/btn:bg-white group-hover/btn:text-black">
                   <ExternalLink size={16} />
                 </span>
                 View Project

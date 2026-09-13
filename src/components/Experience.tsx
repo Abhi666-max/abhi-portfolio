@@ -19,54 +19,41 @@ export default function Experience() {
     
     const items = gsap.utils.toArray<HTMLElement>('.exp-item');
     
-    items.forEach((item, i) => {
-      gsap.fromTo(item, 
-        { opacity: 0, x: -50 },
-        {
-          opacity: 1, 
-          x: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 80%",
-          }
-        }
-      );
-    });
-  }, []);
-
+  
   return (
     <section id="experience" ref={containerRef} className="relative w-full py-32 px-6 md:px-20 z-10 pointer-events-none">
-      <div className="max-w-4xl mx-auto pointer-events-auto">
-        <h2 className="text-sm font-mono tracking-widest uppercase text-[#ff3333] mb-20">
-          [02] // Operational History
+      <div className="max-w-5xl mx-auto pointer-events-auto">
+        <h2 className="text-sm font-mono tracking-widest uppercase text-[var(--accent)] mb-20 glow-text">
+          [02] // Experience
         </h2>
 
-        <div className="flex flex-col border-t border-[#111111]">
+        <div className="flex flex-col">
           {portfolioData.experience.map((exp, i) => (
             <div 
-              key={i} 
-              className="exp-item group flex flex-col md:flex-row justify-between items-start md:items-center py-12 border-b border-[#111111] hover:bg-[#111111] hover:text-[#e6e6e6] transition-colors duration-500 cursor-none"
+              key={exp.id} 
+              className="group flex flex-col md:flex-row justify-between items-start md:items-center py-12 border-t border-[var(--accent)]/30 hover:bg-[var(--accent)]/10 transition-colors px-4 glow-box"
             >
-              <div className="w-full md:w-1/3 mb-6 md:mb-0 px-4">
-                <div className="font-mono text-sm opacity-60 mb-2">{exp.period}</div>
-                <h3 className="text-2xl font-bold uppercase tracking-tighter" style={{ fontFamily: 'var(--font-syncopate)' }}>
-                  {exp.company}
+              <div className="flex flex-col w-full md:w-1/3">
+                <span className="font-mono text-sm text-[var(--accent)] mb-2">
+                  {exp.period}
+                </span>
+                <h3 className="text-3xl font-bold uppercase text-white glow-text" style={{ fontFamily: 'var(--font-syncopate)' }}>
+                  {exp.role}
                 </h3>
               </div>
               
-              <div className="w-full md:w-1/3 mb-6 md:mb-0 px-4">
-                <div className="text-lg font-bold">{exp.role}</div>
+              <div className="w-full md:w-1/3 flex flex-col mt-4 md:mt-0">
+                <span className="text-xl font-bold text-[var(--accent)]">
+                  {exp.company}
+                </span>
               </div>
-              
-              <div className="w-full md:w-1/3 px-4">
-                <p className="opacity-70 text-sm font-mono leading-relaxed">
-                  {exp.description}
-                </p>
+
+              <div className="w-full md:w-1/3 mt-6 md:mt-0 opacity-80 text-sm font-mono text-white/80">
+                {exp.description}
               </div>
             </div>
           ))}
+          <div className="border-t border-[var(--accent)]/30 w-full" />
         </div>
       </div>
     </section>
