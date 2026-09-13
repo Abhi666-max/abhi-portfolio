@@ -1,112 +1,94 @@
 "use client";
 
 import { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import { portfolioData } from '@/data/mockData';
 import SplitType from 'split-type';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
-const chars = '!<>-_\\/[]{}—=+*^?#________';
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 300]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   useEffect(() => {
-    if (titleRef.current && subtitleRef.current) {
-      const splitTitle = new SplitType(titleRef.current, { types: 'chars' });
-      
-      // Text Scrambler Effect
-      splitTitle.chars?.forEach((char, index) => {
-        const originalChar = char.innerText;
-        const scrambler = { val: 0 };
-        
-        gsap.to(scrambler, {
-          val: 1,
-          duration: 1 + Math.random() * 1.5,
-          delay: 0.5 + index * 0.05,
-          ease: "power2.inOut",
-          onUpdate: () => {
-            if (scrambler.val < 0.95) {
-              char.innerText = chars[Math.floor(Math.random() * chars.length)];
-            } else {
-              char.innerText = originalChar;
-            }
-          }
-        });
-      });
+    if (!titleRef.current || !subtitleRef.current) return;
 
-      const tl = gsap.timeline();
-      
-      tl.fromTo(splitTitle.chars, 
-        { opacity: 0, y: 100, scale: 0.9 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          stagger: 0.05,
-          duration: 1.5,
-          ease: "power4.out",
-          delay: 0.5
-        }
-      )
-      .fromTo(subtitleRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 2, ease: "power2.out" },
-        "-=1"
-      );
+    // Split text into individual characters for massive kinetic typography
+    const splitTitle = new SplitType(titleRef.current, { types: 'chars,words' });
+    
+    const tl = gsap.timeline();
+    
+    // Initial Load Animation
+    tl.fromTo(subtitleRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+    ).fromTo(splitTitle.chars, 
+      { opacity: 0, y: 100, rotationX: -90 },
+      {
+        opacity: 1,
+        y: 0,
+        rotationX: 0,
+        stagger: 0.02,
+        duration: 1.2,
+        ease: "expo.out"
+      },
+      "-=0.5"
+    );
 
-      return () => splitTitle.revert();
-    }
+    // ScrollTrigger: Explode text as we scroll down
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top top",
+      end: "bottom top",
+      scrub: 1,
+      animation: gsap.to(splitTitle.chars, {
+        y: (i) => (i % 2 === 0 ? -200 : 200),
+        opacity: 0,
+        rotationZ: (i) => (i % 2 === 0 ? -15 : 15),
+        ease: "none"
+      })
+    });
+
+    return () => {
+      splitTitle.revert();
+      ScrollTrigger.getAll().forEach(t => t.kill());
+    };
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full h-screen flex flex-col items-center justify-center pointer-events-none">
+    <section ref={containerRef} className="relative w-full h-screen flex flex-col items-center justify-center bg-black">
       
-      {/* HUD Crosshairs */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-0 w-8 h-[1px] bg-[var(--accent)]/50" />
-        <div className="absolute top-1/2 right-0 w-8 h-[1px] bg-[var(--accent)]/50" />
-        <div className="absolute top-0 left-1/2 w-[1px] h-8 bg-[var(--accent)]/50" />
-        <div className="absolute bottom-0 left-1/2 w-[1px] h-8 bg-[var(--accent)]/50" />
-      </div>
-
-      <motion.div 
-        style={{ y, opacity }}
-        className="w-full px-6 flex flex-col items-center text-center z-10"
-      >
-        <div ref={subtitleRef} className="text-[var(--accent)] font-mono text-sm md:text-base tracking-[0.3em] uppercase mb-6 flex items-center gap-4 cinematic-shadow">
-          <span className="w-8 h-[1px] bg-[var(--accent)] block" />
+      <div className="w-full px-6 flex flex-col items-center text-center z-10">
+        
+        <div ref={subtitleRef} className="font-mono text-xs md:text-sm tracking-[0.4em] uppercase mb-12 flex items-center gap-6 opacity-60">
+          <span className="w-12 h-[1px] bg-white block" />
           {portfolioData.profile.title}
-          <span className="w-8 h-[1px] bg-[var(--accent)] block" />
+          <span className="w-12 h-[1px] bg-white block" />
         </div>
         
         <h1 
           ref={titleRef}
-          className="text-6xl md:text-8xl lg:text-[12vw] font-bold uppercase leading-none tracking-tighter text-white cinematic-shadow mix-blend-screen"
-          style={{ fontFamily: 'var(--font-syncopate)' }}
+          className="text-[12vw] font-bold uppercase leading-[0.8] tracking-tighter text-white"
+          style={{ fontFamily: 'var(--font-syncopate)', WebkitTextStroke: '1px rgba(255,255,255,1)' }}
         >
-          {portfolioData.profile.name.split(' ')[0]}
+          {portfolioData.profile.name}
         </h1>
+        
+      </div>
+      
+      {/* Scroll indicator */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-50">
+        <span className="font-mono text-xs tracking-widest uppercase">Scroll</span>
+        <div className="w-[1px] h-12 bg-white/30 overflow-hidden">
+          <div className="w-full h-full bg-white origin-top animate-pulse" />
+        </div>
+      </div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 2 }}
-          className="mt-12 text-sm md:text-lg text-[var(--accent)]/80 max-w-lg mx-auto font-mono text-center leading-relaxed"
-        >
-          {portfolioData.profile.bio}
-        </motion.p>
-      </motion.div>
     </section>
   );
 }

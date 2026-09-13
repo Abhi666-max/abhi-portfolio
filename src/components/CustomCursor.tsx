@@ -1,75 +1,64 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
+import { useEffect, useRef } from 'react';
+import { motion, useSpring, useMotionValue } from 'framer-motion';
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const dotRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+
+  // Physics-based spring for the trailing effect
+  const springX = useSpring(mouseX, { stiffness: 500, damping: 28 });
+  const springY = useSpring(mouseY, { stiffness: 500, damping: 28 });
+  
+  const scale = useMotionValue(1);
+  const opacity = useMotionValue(0);
 
   useEffect(() => {
-    // Only run on non-touch devices
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-
-    setIsVisible(true);
-
-    const onMouseMove = (e: MouseEvent) => {
-      // Fast response for the dot
-      gsap.to(dotRef.current, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.1,
-        ease: "power2.out",
-      });
-
-      // Smooth lag for the outer ring
-      gsap.to(cursorRef.current, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.6,
-        ease: "power3.out",
-      });
+    const manageMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+      opacity.set(1);
     };
 
-    const onMouseEnter = () => {
-      gsap.to([cursorRef.current, dotRef.current], { scale: 1.5, opacity: 1, duration: 0.3 });
+    const manageMouseLeave = () => {
+      opacity.set(0);
     };
 
-    const onMouseLeave = () => {
-      gsap.to([cursorRef.current, dotRef.current], { scale: 1, opacity: 0.5, duration: 0.3 });
+    const manageHover = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('.hover-target')) {
+        scale.set(3);
+      } else {
+        scale.set(1);
+      }
     };
 
-    window.addEventListener('mousemove', onMouseMove);
-    
-    // Add hover effects for all interactive elements
-    const hoverTargets = document.querySelectorAll('.hover-target, a, button');
-    hoverTargets.forEach((target) => {
-      target.addEventListener('mouseenter', onMouseEnter);
-      target.addEventListener('mouseleave', onMouseLeave);
-    });
+    window.addEventListener("mousemove", manageMouseMove);
+    window.addEventListener("mouseleave", manageMouseLeave);
+    window.addEventListener("mouseover", manageHover);
 
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      hoverTargets.forEach((target) => {
-        target.removeEventListener('mouseenter', onMouseEnter);
-        target.removeEventListener('mouseleave', onMouseLeave);
-      });
+      window.removeEventListener("mousemove", manageMouseMove);
+      window.removeEventListener("mouseleave", manageMouseLeave);
+      window.removeEventListener("mouseover", manageHover);
     };
-  }, []);
-
-  if (!isVisible) return null;
+  }, [mouseX, mouseY, scale, opacity]);
 
   return (
-    <>
-      <div 
-        ref={cursorRef} 
-        className="fixed top-0 left-0 w-8 h-8 -ml-4 -mt-4 rounded-full border border-[#ff3333] pointer-events-none z-[9999]"
-      />
-      <div 
-        ref={dotRef}
-        className="fixed top-0 left-0 w-2 h-2 -ml-1 -mt-1 rounded-full bg-[#111111] pointer-events-none z-[9999]"
-      />
-    </>
+    <motion.div
+      ref={cursorRef}
+      className="fixed top-0 left-0 w-4 h-4 bg-white rounded-full pointer-events-none z-[100] mix-blend-difference"
+      style={{
+        x: springX,
+        y: springY,
+        translateX: '-50%',
+        translateY: '-50%',
+        scale,
+        opacity
+      }}
+    />
   );
 }

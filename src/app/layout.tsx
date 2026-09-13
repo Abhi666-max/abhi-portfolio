@@ -1,44 +1,29 @@
-import type { Metadata } from "next";
-import { Inter, Syncopate, Playfair_Display, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
-import LenisProvider from "@/components/LenisProvider";
-import CustomCursor from "@/components/CustomCursor";
-import Header from "@/components/Header";
+import type { Metadata } from 'next';
+import { Inter, Syncopate } from 'next/font/google';
+import './globals.css';
+import Header from '@/components/Header';
+import LenisProvider from '@/components/LenisProvider';
+import CustomCursor from '@/components/CustomCursor';
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const syncopate = Syncopate({ 
-  weight: ["400", "700"],
-  subsets: ["latin"], 
-  variable: "--font-syncopate" 
-});
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-});
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const syncopate = Syncopate({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-syncopate' });
 
 export const metadata: Metadata = {
-  title: "Awwwards Portfolio | Creative Developer",
-  description: "High-end Scrollytelling Portfolio",
+  title: 'Portfolio | Full Stack Developer',
+  description: 'Creative Developer Portfolio built with Next.js',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className="no-scrollbar">
-      <body
-        className={`${inter.variable} ${syncopate.variable} ${playfair.variable} ${jetbrains.variable} font-sans antialiased bg-[#030303] text-white selection:bg-[#88ccff] selection:text-black`}
-      >
-        <div className="noise-overlay"></div>
+    <html lang="en">
+      <body className={`${inter.variable} ${syncopate.variable} bg-black text-white selection:bg-white selection:text-black`}>
+        <CustomCursor />
+        <Header />
         <LenisProvider>
-          <CustomCursor />
-          <Header />
           {children}
         </LenisProvider>
       </body>
