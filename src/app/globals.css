@@ -36,20 +36,20 @@ html.lenis, html.lenis body { height: auto; }
   backdrop-filter: blur(10px);
 }
 
-
-
-
-  to { background-position: 1000px -500px; }
-}
-
-  to { background-position: -1000px 200px; }
-}
-
 @keyframes fog {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-10%, -5%, 0); }
 }
 .animate-fog {
   animation: fog 60s linear infinite alternate;
+  will-change: transform;
+}
+
+@keyframes fogReverse {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(10%, 5%, 0); }
+}
+.animate-fog-reverse {
+  animation: fogReverse 80s linear infinite alternate;
   will-change: transform;
 }
