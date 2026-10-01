@@ -38,11 +38,18 @@ html.lenis, html.lenis body { height: auto; }
 
 
 
-@keyframes drift {
-  from { background-position: 0 0; }
+
   to { background-position: 1000px -500px; }
 }
-@keyframes driftReverse {
-  from { background-position: 0 0; }
+
   to { background-position: -1000px 200px; }
+}
+
+@keyframes fog {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-10%, -5%, 0); }
+}
+.animate-fog {
+  animation: fog 60s linear infinite alternate;
+  will-change: transform;
 }

@@ -94,15 +94,15 @@ export default function Atmosphere({ soundEnabled }: { soundEnabled: boolean }) 
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 103, 31, ${opacity})`; 
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#ff671f';
+        
+        
         ctx.fill();
       }
     }
 
     const initParticles = () => {
       particles = [];
-      for (let i = 0; i < 40; i++) {
+      for (let i = 0; i < 15; i++) {
         particles.push(new Particle());
       }
     };

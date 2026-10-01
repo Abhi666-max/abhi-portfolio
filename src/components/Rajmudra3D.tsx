@@ -72,18 +72,18 @@ function Coin() {
 export default function Rajmudra3D() {
   return (
     <div className="w-full h-[60vh] md:h-[70vh] flex items-center justify-center relative z-10 hover-target">
-      <Canvas camera={{ position: [0, 0, 6], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+      <Canvas camera={{ position: [0, 0, 6], fov: 45 }} dpr={[1, 1.5]} gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}>
         <ambientLight intensity={0.8} />
         <directionalLight position={[10, 10, 5]} intensity={2.5} color="#ffeedd" />
         <directionalLight position={[-10, -10, -5]} intensity={1.5} color="#ffaa00" />
         <pointLight position={[0, 0, 2]} intensity={2} color="#ff671f" distance={10} />
         
-        <Float speed={2} rotationIntensity={0.5} floatIntensity={1.5}>
+        <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
           <Coin />
         </Float>
         
-        <Environment preset="city" />
-        <ContactShadows position={[0, -3, 0]} opacity={0.6} scale={12} blur={2.5} far={4} color="#8b2500" />
+        
+        
       </Canvas>
     </div>
   );
