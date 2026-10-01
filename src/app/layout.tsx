@@ -1,17 +1,16 @@
 import type { Metadata } from 'next';
-import { Inter, Syncopate, Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
-import LenisProvider from '@/components/LenisProvider';
-import CustomCursor from '@/components/CustomCursor';
+import Footer from '@/components/Footer';
+import SwordCursor from '@/components/SwordCursor';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const syncopate = Syncopate({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-syncopate' });
 const playfair = Playfair_Display({ subsets: ['latin'], style: ['normal', 'italic'], variable: '--font-playfair' });
 
 export const metadata: Metadata = {
-  title: 'Portfolio | Cinematic Epic',
-  description: 'Creative Developer Portfolio',
+  title: 'The Maratha Chronicles | Abhi',
+  description: 'A Historic Royal Portfolio',
 };
 
 export default function RootLayout({
@@ -21,12 +20,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${syncopate.variable} ${playfair.variable} bg-black text-white selection:bg-[#c89d70] selection:text-black`}>
-        <CustomCursor />
+      <body 
+        className={`${inter.variable} ${playfair.variable}`}
+        style={{
+          backgroundColor: '#d7c4a1',
+          backgroundImage: 'url("https://www.transparenttextures.com/patterns/old-paper.png")',
+          color: '#3b2314'
+        }}
+      >
+        <SwordCursor />
         <Header />
-        <LenisProvider>
-          {children}
-        </LenisProvider>
+        {children}
+        <Footer />
       </body>
     </html>
   );

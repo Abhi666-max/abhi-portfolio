@@ -1,60 +1,77 @@
 "use client";
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
-import { motion } from 'framer-motion';
-import { portfolioData } from '@/data/mockData';
-import Magnetic from './Magnetic';
-
-const menuLinks = [
-  { name: 'Home', href: '#scroll-container' },
-  { name: 'About', href: '#about' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
+const links = [
+  { label: 'प्रस्तावना', sub: 'The Architect', id: 'intro' },
+  { label: 'मोहिमा', sub: 'Campaigns', id: 'experience' },
+  { label: 'ऐतिहासिक दस्तऐवज', sub: 'Royal Archives', id: 'projects' },
 ];
 
-export default function MenuOverlay({ onClose }: { onClose: () => void }) {
+export default function MenuOverlay({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const linksRef = useRef<(HTMLAnchorElement | null)[]>([]);
+
+  useEffect(() => {
+    if (isOpen) {
+      gsap.to(overlayRef.current, {
+        clipPath: 'inset(0% 0 0 0)',
+        duration: 1,
+        ease: 'power4.inOut',
+      });
+      gsap.fromTo(linksRef.current,
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out', delay: 0.5 }
+      );
+    } else {
+      gsap.to(overlayRef.current, {
+        clipPath: 'inset(0% 0 100% 0)', // Rolls up like a scroll
+        duration: 1,
+        ease: 'power4.inOut',
+      });
+    }
+  }, [isOpen]);
+
   return (
-    <motion.div
-      initial={{ clipPath: 'inset(0% 0% 100% 0%)' }}
-      animate={{ clipPath: 'inset(0% 0% 0% 0%)' }}
-      exit={{ clipPath: 'inset(0% 0% 100% 0%)' }}
-      transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl text-white"
+    <div 
+      ref={overlayRef}
+      className="fixed inset-0 z-[200] flex flex-col justify-center px-10 md:px-32 bg-[#d7c4a1]"
+      style={{
+        clipPath: 'inset(0% 0 100% 0)',
+        backgroundImage: 'url("https://www.transparenttextures.com/patterns/old-paper.png")',
+        backgroundBlendMode: 'multiply'
+      }}
     >
       
-      <div className="flex flex-col items-center gap-12 z-10">
-        <div className="flex flex-col items-center gap-4">
-          {menuLinks.map((link, i) => (
-            <Magnetic key={link.name} strength={30}>
-              <motion.a
-                href={link.href}
-                onClick={onClose}
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
-                className="hover-target text-6xl md:text-8xl font-bold uppercase tracking-tighter text-transparent hover:text-white transition-all p-4 -m-4"
-                style={{ fontFamily: 'var(--font-syncopate)', WebkitTextStroke: '1px rgba(255,255,255,1)' }}
-              >
-                {link.name}
-              </motion.a>
-            </Magnetic>
-          ))}
-        </div>
+      {/* Decorative Borders */}
+      <div className="absolute inset-8 border-[3px] border-double border-[#8b2500]/30 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 w-[80vh] h-[80vh] -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none" style={{ backgroundImage: 'url("https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Om_symbol.svg/1024px-Om_symbol.svg.png")', backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }} />
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="flex gap-8 font-mono text-sm opacity-50"
-        >
-          {Object.entries(portfolioData.profile.socials).map(([name, url]) => (
-            <Magnetic key={name} strength={20}>
-              <a href={url} target="_blank" rel="noreferrer" className="hover-target hover:text-white hover:opacity-100 transition-colors p-2 -m-2 uppercase tracking-widest">
-                {name}
-              </a>
-            </Magnetic>
-          ))}
-        </motion.div>
+      <div className="flex justify-between items-center absolute top-10 left-10 right-10">
+        <div className="w-16 h-16 rounded-full border-4 border-[#8b2500] border-dashed flex items-center justify-center text-[#8b2500] font-bold text-2xl" style={{ fontFamily: 'var(--font-yatra)' }}>राज</div>
+        <button onClick={onClose} className="text-[#8b2500] hover:text-[#ff671f] cursor-none hover-target transition-colors">
+          <span className="font-sans text-xs tracking-[0.4em] uppercase font-bold">Close</span>
+        </button>
       </div>
-    </motion.div>
+
+      <div className="flex flex-col gap-12 relative z-10 items-center">
+        {links.map((link, i) => (
+          <a
+            key={link.id}
+            href={`#${link.id}`}
+            ref={el => linksRef.current[i] = el}
+            onClick={onClose}
+            className="flex flex-col items-center group cursor-none hover-target"
+          >
+            <span className="text-5xl md:text-7xl text-[#8b2500] group-hover:text-[#ff671f] transition-colors duration-500 mb-2" style={{ fontFamily: 'var(--font-yatra)' }}>
+              {link.label}
+            </span>
+            <span className="font-sans text-xs tracking-[0.5em] uppercase text-[#3b2314] opacity-70 group-hover:opacity-100 transition-opacity duration-500">
+              {link.sub}
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
   );
 }

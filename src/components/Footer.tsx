@@ -1,52 +1,29 @@
 "use client";
 
-import { portfolioData } from '@/data/mockData';
-import Magnetic from './Magnetic';
-
 export default function Footer() {
   return (
-    <footer className="relative w-full flex flex-col items-center justify-end pb-8 pt-48 bg-black text-white overflow-hidden">
+    <footer className="w-full bg-[#3b2314] text-[#d7c4a1] py-20 px-6 md:px-20 relative overflow-hidden flex flex-col items-center border-t-8 border-[#8b2500]">
       
-      <div className="w-full max-w-7xl px-6 md:px-12 flex flex-col items-center relative z-10">
-        
-        <div className="text-center mb-24 w-full cursor-none">
-          <h2 className="text-[12vw] font-bold uppercase tracking-tighter leading-[0.8] hover-target" style={{ fontFamily: 'var(--font-syncopate)' }}>
-            Let's Make
-          </h2>
-          <h2 className="text-[12vw] font-bold uppercase tracking-tighter text-transparent mt-2 hover-target" style={{ WebkitTextStroke: '1px rgba(255,255,255,1)', fontFamily: 'var(--font-syncopate)', lineHeight: '0.8' }}>
-            Something
-          </h2>
-        </div>
+      {/* Decorative bg */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/old-wall.png")' }} />
+      
+      <div className="w-24 h-24 rounded-full border-2 border-[#d7c4a1] border-dashed flex items-center justify-center text-[#d7c4a1] mb-12 relative z-10">
+        <span style={{ fontFamily: 'var(--font-yatra)' }} className="text-4xl font-bold">अ</span>
+      </div>
 
-        <div className="w-full flex flex-col md:flex-row justify-between items-center gap-8 font-mono text-sm border-t border-white/20 pt-8">
-          
-          <div className="flex gap-8 z-20">
-            <Magnetic strength={30}>
-              <a href={`mailto:${portfolioData.profile.email}`} className="hover-target transition-opacity opacity-70 hover:opacity-100 uppercase tracking-widest p-4 -m-4">
-                {portfolioData.profile.email}
-              </a>
-            </Magnetic>
-          </div>
+      <h2 className="text-4xl md:text-6xl text-center mb-6 z-10" style={{ fontFamily: 'var(--font-yatra)' }}>
+        इतिहास साक्षी आहे
+      </h2>
+      
+      <p className="font-sans text-sm tracking-[0.3em] uppercase opacity-70 mb-16 text-center max-w-lg z-10" style={{ fontFamily: 'var(--font-crimson)' }}>
+        The Empire of Abhi — Crafted with the strength of the past, forged for the future.
+      </p>
 
-          <div className="flex gap-8 z-20">
-            {Object.entries(portfolioData.profile.socials).map(([name, url]) => (
-              <Magnetic key={name} strength={40}>
-                <a 
-                  href={url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover-target uppercase tracking-widest opacity-40 hover:opacity-100 transition-all p-4 -m-4"
-                >
-                  {name}
-                </a>
-              </Magnetic>
-            ))}
-          </div>
-
-          <div className="opacity-30 uppercase tracking-widest text-xs text-center md:text-right">
-            © {new Date().getFullYear()} {portfolioData.profile.name}.
-          </div>
-        </div>
+      <div className="w-full max-w-4xl h-[1px] bg-[#d7c4a1]/20 mb-8 z-10" />
+      
+      <div className="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center font-sans text-xs tracking-widest uppercase opacity-50 z-10 gap-4">
+        <span>© {new Date().getFullYear()} Maratha Empire</span>
+        <span>Built by the Architect</span>
       </div>
     </footer>
   );
