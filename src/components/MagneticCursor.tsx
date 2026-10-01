@@ -32,7 +32,7 @@ export default function MagneticCursor() {
   return (
     <>
       <motion.div
-        className="fixed top-0 left-0 w-6 h-6 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference flex items-center justify-center"
+        className="fixed top-0 left-0 w-6 h-6 bg-[#ff671f] rounded-full pointer-events-none z-[9999] mix-blend-screen flex items-center justify-center opacity-50"
         animate={{
           x: mousePosition.x - 12,
           y: mousePosition.y - 12,
@@ -45,10 +45,10 @@ export default function MagneticCursor() {
           mass: 0.1
         }}
       >
-        {isHovering && <span className="text-[3px] font-sans text-black font-bold tracking-widest uppercase">View</span>}
+        {isHovering && <span className="text-[3px] font-sans text-white font-bold tracking-widest uppercase">View</span>}
       </motion.div>
       <motion.div
-        className="fixed top-0 left-0 w-1 h-1 bg-white rounded-full pointer-events-none z-[10000] mix-blend-difference"
+        className="fixed top-0 left-0 w-1 h-1 bg-[#ffd700] rounded-full pointer-events-none z-[10000] drop-shadow-[0_0_5px_#ff671f]"
         animate={{
           x: mousePosition.x - 2,
           y: mousePosition.y - 2,

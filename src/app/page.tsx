@@ -17,7 +17,7 @@ export default function Home() {
   }, [isLoading]);
 
   return (
-    <main className="bg-[#e4dccf] min-h-screen text-[#1a1a1a] font-sans selection:bg-[#1a1a1a] selection:text-white">
+    <main className="bg-[#2a0800] min-h-screen text-[#ffd700] font-sans selection:bg-[#ff671f] selection:text-white">
       <MagneticCursor />
       {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
       

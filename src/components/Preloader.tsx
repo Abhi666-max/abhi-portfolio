@@ -47,19 +47,22 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
   }, [onComplete]);
 
   return (
-    <div ref={containerRef} className="fixed inset-0 z-[999] flex items-center justify-center bg-[#e4dccf] overflow-hidden">
+    <div ref={containerRef} className="fixed inset-0 z-[999] flex items-center justify-center bg-[#1a0500] overflow-hidden">
       <div 
         ref={circleRef} 
-        className="absolute w-4 h-4 bg-black rounded-full mix-blend-overlay z-0 origin-center"
+        className="absolute w-4 h-4 bg-[#ff671f] rounded-full mix-blend-overlay z-0 origin-center"
         style={{ scale: 0 }}
       />
       
-      <div ref={textRef} className="relative z-10 flex flex-col items-center text-[#1a1a1a]">
+      <div ref={textRef} className="relative z-10 flex flex-col items-center text-[#ffd700]">
         <div className="font-serif text-8xl md:text-[12vw] font-bold leading-none" style={{ fontFamily: 'var(--font-playfair)' }}>
           {progress}
         </div>
-        <div className="font-sans text-xs tracking-[0.5em] uppercase mt-4 opacity-50">
-          The Story Begins
+        <div className="font-sans text-xl md:text-2xl tracking-[0.4em] uppercase mt-6 font-bold text-[#ff671f] drop-shadow-lg">
+          जय भवानी • जय शिवाजी
+        </div>
+        <div className="font-sans text-xs tracking-[0.5em] uppercase mt-4 opacity-70">
+          The Maratha Chronicles
         </div>
       </div>
     </div>
