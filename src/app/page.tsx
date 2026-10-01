@@ -1,13 +1,9 @@
 "use client";
 import { useState, useEffect } from 'react';
 import Preloader from '@/components/Preloader';
-import Hero from '@/components/Hero';
-import About from '@/components/About';
-import Experience from '@/components/Experience';
-import Projects from '@/components/Projects';
+import StoryEngine from '@/components/StoryEngine';
 import SmoothScroll from '@/components/SmoothScroll';
-import VideoBackground from '@/components/VideoBackground';
-import Footer from '@/components/Footer';
+import MagneticCursor from '@/components/MagneticCursor';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,18 +17,12 @@ export default function Home() {
   }, [isLoading]);
 
   return (
-    <main className="bg-transparent min-h-screen text-[#f5f5f7] font-sans selection:bg-[#d4af37] selection:text-black">
+    <main className="bg-[#e4dccf] min-h-screen text-[#1a1a1a] font-sans selection:bg-[#1a1a1a] selection:text-white">
+      <MagneticCursor />
       {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
-      <VideoBackground />
       
       <SmoothScroll>
-        <div id="main-content" className="relative w-full flex flex-col">
-          <Hero isLoaded={!isLoading} />
-          <About />
-          <Experience />
-          <Projects />
-          <Footer />
-        </div>
+        {!isLoading && <StoryEngine />}
       </SmoothScroll>
     </main>
   );
