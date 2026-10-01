@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import Preloader from '@/components/Preloader';
 import TrueHistoricEngine from '@/components/TrueHistoricEngine';
 import SmoothScroll from '@/components/SmoothScroll';
+import Atmosphere from '@/components/Atmosphere';
 import MagneticCursor from '@/components/MagneticCursor';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(false);
 
   useEffect(() => {
     if (isLoading) {
@@ -51,7 +53,8 @@ export default function Home() {
         }}
       >
         <MagneticCursor />
-        {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+      <Atmosphere soundEnabled={soundEnabled} />
+        {isLoading && <Preloader onComplete={() => { setIsLoading(false); setSoundEnabled(true); }} />}
         
         <SmoothScroll>
           {!isLoading && <TrueHistoricEngine />}
