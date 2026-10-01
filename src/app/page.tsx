@@ -4,7 +4,6 @@ import Preloader from '@/components/Preloader';
 import TrueHistoricEngine from '@/components/TrueHistoricEngine';
 import SmoothScroll from '@/components/SmoothScroll';
 import Atmosphere from '@/components/Atmosphere';
-import MagneticCursor from '@/components/MagneticCursor';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -52,8 +51,7 @@ export default function Home() {
           backgroundAttachment: 'fixed'
         }}
       >
-        <MagneticCursor />
-      <Atmosphere soundEnabled={soundEnabled} />
+        <Atmosphere soundEnabled={soundEnabled} />
         {isLoading && <Preloader onComplete={() => { setIsLoading(false); setSoundEnabled(true); }} />}
         
         <SmoothScroll>
