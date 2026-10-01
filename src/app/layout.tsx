@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ParallaxBackground from '@/components/ParallaxBackground';
 import SwordCursor from '@/components/SwordCursor';
 import ScrollSpear from '@/components/ScrollSpear';
 
@@ -23,14 +24,11 @@ export default function RootLayout({
     <html lang="en">
       <body 
         className={`${inter.variable} ${playfair.variable}`}
-        style={{
-          backgroundColor: '#d7c4a1',
-          backgroundImage: 'url("https://www.transparenttextures.com/patterns/old-paper.png")',
-          color: '#3b2314'
-        }}
+        style={{ color: '#3b2314' }}
       >
         <SwordCursor />
         <ScrollSpear />
+        <ParallaxBackground />
         <Header />
         {children}
         <Footer />

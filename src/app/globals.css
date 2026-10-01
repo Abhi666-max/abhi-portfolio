@@ -37,3 +37,12 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 
+
+@keyframes drift {
+  from { background-position: 0 0; }
+  to { background-position: 1000px -500px; }
+}
+@keyframes driftReverse {
+  from { background-position: 0 0; }
+  to { background-position: -1000px 200px; }
+}

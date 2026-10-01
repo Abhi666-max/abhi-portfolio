@@ -12,7 +12,7 @@ export default function TrueHistoricEngine() {
   const containerRef = useRef<HTMLDivElement>(null);
   
   // Background Refs for Parallax Forts/Mavlas
-  const fortBgRef = useRef<HTMLDivElement>(null);
+  
   const scrollContentRef = useRef<HTMLDivElement>(null);
   const elementsRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -20,17 +20,7 @@ export default function TrueHistoricEngine() {
     if (!containerRef.current) return;
 
     // Slowly scale the massive fort background as user scrolls down
-    gsap.to(fortBgRef.current, {
-      yPercent: 30,
-      scale: 1.1,
-      ease: "none",
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      }
-    });
+    
 
     // Reveal elements like ink appearing on paper
     elementsRef.current.forEach((el, i) => {
@@ -60,19 +50,10 @@ export default function TrueHistoricEngine() {
     <section ref={containerRef} className="relative w-full min-h-screen pt-[30vh] pb-32 overflow-x-hidden">
       
       {/* Background Fort Silhouette (Raigad vibe) */}
-      <div 
-        ref={fortBgRef}
-        className="fixed top-0 left-0 w-full h-[150vh] z-0 pointer-events-none opacity-20"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1598322692290-7d3d198538d3?q=80&w=2000&auto=format&fit=crop")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'top center',
-          mixBlendMode: 'multiply'
-        }}
-      />
+      
       
       {/* Gradient fade to make bottom look like endless paper */}
-      <div className="fixed bottom-0 left-0 w-full h-[40vh] bg-gradient-to-t from-[#d7c4a1] to-transparent z-0 pointer-events-none" />
+      
 
       {/* Royal Border (Farman Corners) fixed on screen */}
       <div className="fixed inset-6 border-[3px] border-double border-[#8b2500]/30 z-[50] pointer-events-none rounded-lg" />
