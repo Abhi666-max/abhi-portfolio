@@ -1,5 +1,4 @@
 "use client";
-
 import { useRef, useEffect } from 'react';
 import { portfolioData } from '@/data/mockData';
 import gsap from 'gsap';
@@ -18,25 +17,25 @@ export default function Projects() {
     imagesRef.current.forEach((img, i) => {
       if (!img || !maskRefs.current[i]) return;
       
-      // Elegant Cinematic Mask Reveal (Curtain style)
+      // Clean, elegant mask reveal
       gsap.fromTo(maskRefs.current[i],
         { clipPath: 'inset(100% 0 0 0)' },
         {
           clipPath: 'inset(0% 0 0 0)',
           ease: "power3.inOut",
-          duration: 2.0,
+          duration: 1.5,
           scrollTrigger: {
             trigger: maskRefs.current[i],
-            start: "top 75%",
+            start: "top 80%",
           }
         }
       );
 
-      // Deep Parallax Effect
+      // Subtle Parallax
       gsap.fromTo(img, 
-        { y: -100, scale: 1.15 },
+        { y: -50, scale: 1.05 },
         {
-          y: 100,
+          y: 50,
           scale: 1,
           ease: "none",
           scrollTrigger: {
@@ -51,42 +50,47 @@ export default function Projects() {
   }, []);
 
   return (
-    <section id="projects" ref={containerRef} className="relative w-full py-32 text-white bg-transparent">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col gap-32 relative z-10">
+    <section id="projects" ref={containerRef} className="relative w-full py-40 px-6 md:px-12 bg-[#0a0a0a]">
+      <div className="max-w-7xl mx-auto flex flex-col gap-32">
         
-        {/* Chapter Title */}
-        <h2 className="text-xs font-sans tracking-[0.4em] uppercase text-[#d4af37] mb-12 text-center md:text-left">
-          CHAPTER III &mdash; THE ARCHIVES
+        <h2 className="text-xs font-sans tracking-[0.3em] uppercase text-[#d4af37] text-center md:text-left">
+          03 / Selected Works
         </h2>
 
         {portfolioData.projects.map((project, i) => (
           <div key={project.id} className="relative w-full flex flex-col md:flex-row gap-16 items-center group">
             
-            {/* Cinematic Image Masking */}
+            {/* Image Mask */}
             <div 
               ref={el => { maskRefs.current[i] = el; }}
-              className="w-full md:w-2/3 h-[60vh] md:h-[80vh] overflow-hidden relative hover-target"
+              className="w-full md:w-3/5 h-[50vh] md:h-[70vh] overflow-hidden relative"
             >
-              <a href={project.link} target="_blank" rel="noreferrer" className="block w-full h-full cursor-none">
+              <a href={project.link} target="_blank" rel="noreferrer" className="block w-full h-full relative overflow-hidden">
                 <div 
                   ref={el => { imagesRef.current[i] = el; }}
-                  className="w-full h-full bg-cover bg-center transition-transform duration-[2s] group-hover:scale-105"
+                  className="absolute inset-[-10%] w-[120%] h-[120%] bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
                   style={{ backgroundImage: `url(${project.image})` }}
                 >
-                  {/* Luxury dark gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-50 group-hover:opacity-0 transition-opacity duration-1000" />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700" />
                 </div>
               </a>
             </div>
 
-            {/* Project Details */}
-            <div className="w-full md:w-1/3 flex flex-col gap-8 opacity-80 group-hover:opacity-100 transition-opacity duration-700">
-              <h3 className="text-4xl md:text-5xl font-serif text-[#d4af37]" style={{ fontFamily: 'var(--font-playfair)' }}>
+            {/* Typography */}
+            <div className="w-full md:w-2/5 flex flex-col gap-6">
+              <h3 className="text-4xl md:text-5xl font-serif text-[#f5f5f7]" style={{ fontFamily: 'var(--font-playfair)' }}>
                 {project.title}
               </h3>
-              <p className="font-sans text-sm md:text-base text-white/70 leading-relaxed font-light">
+              <p className="font-sans text-sm md:text-base text-[#888] leading-relaxed font-light">
                 {project.description}
               </p>
+              <div className="flex gap-4 flex-wrap mt-4">
+                {project.tags.map(tag => (
+                  <span key={tag} className="text-xs font-sans uppercase tracking-widest border border-[#333] px-4 py-2 text-[#d4af37]">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
             
           </div>

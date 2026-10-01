@@ -1,5 +1,4 @@
 "use client";
-
 import { useRef, useEffect } from 'react';
 import { portfolioData } from '@/data/mockData';
 import gsap from 'gsap';
@@ -19,40 +18,36 @@ export default function About() {
     const lines = textRef.current.children;
 
     gsap.fromTo(lines, 
-      { opacity: 0, y: 40, filter: "blur(10px)" },
+      { opacity: 0, y: 30 },
       {
         opacity: 1,
         y: 0,
-        filter: "blur(0px)",
-        stagger: 0.2,
+        stagger: 0.15,
+        duration: 1.2,
         ease: "power2.out",
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 60%",
-          end: "bottom 80%",
-          scrub: 1.5
+          start: "top 75%",
         }
       }
     );
   }, []);
 
   return (
-    <section id="about" ref={containerRef} className="relative w-full py-48 text-white px-6 md:px-20 bg-transparent">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-20 relative z-10">
+    <section id="about" ref={containerRef} className="relative w-full py-40 px-6 md:px-20 bg-[#0a0a0a]">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-20">
         
-        {/* The Chapter Title - sticky so it stays while reading */}
-        <div className="w-full md:w-1/4">
-          <h2 className="text-xs font-sans tracking-[0.4em] uppercase text-[#d4af37] sticky top-32">
-            CHAPTER I &mdash; THE ARCHITECT
+        <div className="w-full md:w-1/3">
+          <h2 className="text-xs font-sans tracking-[0.3em] uppercase text-[#d4af37]">
+            01 / Introduction
           </h2>
         </div>
 
-        {/* The Story Content */}
-        <div className="w-full md:w-3/4">
-          <div ref={textRef} className="text-3xl md:text-5xl lg:text-6xl font-serif leading-[1.3]" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <div className="w-full md:w-2/3">
+          <div ref={textRef} className="text-2xl md:text-4xl lg:text-5xl font-serif leading-[1.4] text-[#f5f5f7]" style={{ fontFamily: 'var(--font-playfair)' }}>
             {portfolioData.profile.bio.split('.').map((sentence: string, i: number) => (
               sentence.trim() && (
-                <span key={i} className="block mb-8 md:mb-12 text-white/90 drop-shadow-xl">
+                <span key={i} className="block mb-8">
                   {sentence.trim()}.
                 </span>
               )
