@@ -1,18 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import ParallaxBackground from '@/components/ParallaxBackground';
-import SwordCursor from '@/components/SwordCursor';
-import ScrollSpear from '@/components/ScrollSpear';
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const playfair = Playfair_Display({ subsets: ['latin'], style: ['normal', 'italic'], variable: '--font-playfair' });
+import LenisProvider from '@/components/LenisProvider';
 
 export const metadata: Metadata = {
-  title: 'The Maratha Chronicles | Abhi',
-  description: 'A Historic Royal Portfolio',
+  title: 'Anime Studio | Portfolio',
+  description: 'Manga Aesthetic Portfolio',
 };
 
 export default function RootLayout({
@@ -22,16 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body 
-        className={`${inter.variable} ${playfair.variable}`}
-        style={{ color: '#3b2314' }}
-      >
-        <SwordCursor />
-        <ScrollSpear />
-        <ParallaxBackground />
-        <Header />
-        {children}
-        <Footer />
+      <body>
+        <LenisProvider>
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );
