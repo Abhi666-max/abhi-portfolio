@@ -50,7 +50,7 @@ export default function Projects() {
   }, []);
 
   return (
-    <section id="projects" ref={containerRef} className="relative w-full py-40 px-6 md:px-12 bg-[#0a0a0a]">
+    <section id="projects" ref={containerRef} className="relative w-full py-40 px-6 md:px-12 bg-transparent">
       <div className="max-w-7xl mx-auto flex flex-col gap-32">
         
         <h2 className="text-xs font-sans tracking-[0.3em] uppercase text-[#d4af37] text-center md:text-left">

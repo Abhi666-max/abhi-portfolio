@@ -1,18 +1,16 @@
 "use client";
-
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 
 export default function VideoBackground() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!overlayRef.current) return;
-    // Slow breathing overlay effect for extra cinematic feel
+    // Elegant, slow breathing overlay to give the story a cinematic pulse
     gsap.to(overlayRef.current, {
-      opacity: 0.6,
-      duration: 4,
+      opacity: 0.8,
+      duration: 6,
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut"
@@ -22,11 +20,10 @@ export default function VideoBackground() {
   return (
     <div className="fixed inset-0 w-full h-full z-0 overflow-hidden bg-black pointer-events-none">
       {/* 
-        Using a cinematic dark dust/smoke video. 
-        Fallback is a dark background color.
+        Cinematic Dark Flowing Fluid/Smoke Video. 
+        It plays silently and infinitely behind the entire story.
       */}
       <video
-        ref={videoRef}
         autoPlay
         muted
         loop
@@ -37,18 +34,18 @@ export default function VideoBackground() {
         <source src="https://cdn.pixabay.com/video/2020/03/19/33869-399127885_large.mp4" type="video/mp4" />
       </video>
       
-      {/* Deep cinematic vignette and color grading overlay (Sand/Gold tint) */}
+      {/* Deep cinematic gradient overlay to ensure the luxury typography remains perfectly legible */}
       <div 
         ref={overlayRef}
-        className="absolute inset-0 opacity-40 mix-blend-multiply" 
+        className="absolute inset-0 opacity-60 mix-blend-multiply" 
         style={{
-          background: 'radial-gradient(circle at center, transparent 0%, #000000 80%), linear-gradient(180deg, rgba(200,157,112,0.1) 0%, rgba(0,0,0,0.8) 100%)'
+          background: 'radial-gradient(circle at center, transparent 0%, #000000 90%), linear-gradient(180deg, rgba(20,20,20,0.4) 0%, rgba(0,0,0,0.95) 100%)'
         }}
       />
       
-      {/* Noise overlay for film grain */}
+      {/* Subtle film grain noise */}
       <div 
-        className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none"
+        className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
         style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")' }}
       />
     </div>

@@ -32,7 +32,7 @@ export default function Experience() {
   }, []);
 
   return (
-    <section id="experience" ref={containerRef} className="relative w-full py-40 px-6 md:px-20 bg-[#0a0a0a]">
+    <section id="experience" ref={containerRef} className="relative w-full py-40 px-6 md:px-20 bg-transparent">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-20">
         
         <div className="w-full md:w-1/3">

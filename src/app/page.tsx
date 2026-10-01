@@ -6,6 +6,7 @@ import About from '@/components/About';
 import Experience from '@/components/Experience';
 import Projects from '@/components/Projects';
 import SmoothScroll from '@/components/SmoothScroll';
+import VideoBackground from '@/components/VideoBackground';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -20,8 +21,9 @@ export default function Home() {
   }, [isLoading]);
 
   return (
-    <main className="bg-[#0a0a0a] min-h-screen text-[#f5f5f7] font-sans selection:bg-[#d4af37] selection:text-black">
+    <main className="bg-transparent min-h-screen text-[#f5f5f7] font-sans selection:bg-[#d4af37] selection:text-black">
       {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+      <VideoBackground />
       
       <SmoothScroll>
         <div id="main-content" className="relative w-full flex flex-col">
