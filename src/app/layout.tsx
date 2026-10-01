@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SwordCursor from '@/components/SwordCursor';
+import ScrollSpear from '@/components/ScrollSpear';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const playfair = Playfair_Display({ subsets: ['latin'], style: ['normal', 'italic'], variable: '--font-playfair' });
@@ -29,6 +30,7 @@ export default function RootLayout({
         }}
       >
         <SwordCursor />
+        <ScrollSpear />
         <Header />
         {children}
         <Footer />

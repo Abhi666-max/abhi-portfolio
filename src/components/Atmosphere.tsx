@@ -1,20 +1,48 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Atmosphere({ soundEnabled }: { soundEnabled: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const rustleRef = useRef<HTMLAudioElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // Handle Audio
+  // Handle Mashaal Tracking
   useEffect(() => {
-    if (audioRef.current) {
-      if (soundEnabled) {
-        audioRef.current.volume = 0.3; // Subtle background volume
-        audioRef.current.play().catch(e => console.log("Audio play prevented:", e));
-      } else {
-        audioRef.current.pause();
-      }
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Handle Audio & Scroll Rustle
+  useEffect(() => {
+    if (audioRef.current && soundEnabled) {
+      audioRef.current.volume = 0.2; 
+      audioRef.current.play().catch(e => console.log("Audio play prevented:", e));
     }
+
+    let isScrolling: any;
+    const handleScroll = () => {
+      if (soundEnabled && rustleRef.current) {
+        if (rustleRef.current.paused) {
+          rustleRef.current.volume = 0.4;
+          rustleRef.current.play().catch(e => {});
+        }
+        clearTimeout(isScrolling);
+        isScrolling = setTimeout(() => {
+          rustleRef.current?.pause();
+        }, 150);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(isScrolling);
+    };
   }, [soundEnabled]);
 
   // Handle Canvas Embers (Chingari)
@@ -57,7 +85,6 @@ export default function Atmosphere({ soundEnabled }: { soundEnabled: boolean }) 
         this.x += this.speedX;
         this.y += this.speedY;
         this.life--;
-        // Swaying motion
         this.speedX += (Math.random() - 0.5) * 0.1;
       }
 
@@ -66,8 +93,8 @@ export default function Atmosphere({ soundEnabled }: { soundEnabled: boolean }) 
         const opacity = (this.life / this.maxLife) * 0.8;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 103, 31, ${opacity})`; // Saffron / Fire color
-        ctx.shadowBlur = 10;
+        ctx.fillStyle = `rgba(255, 103, 31, ${opacity})`; 
+        ctx.shadowBlur = 15;
         ctx.shadowColor = '#ff671f';
         ctx.fill();
       }
@@ -75,24 +102,21 @@ export default function Atmosphere({ soundEnabled }: { soundEnabled: boolean }) 
 
     const initParticles = () => {
       particles = [];
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 40; i++) {
         particles.push(new Particle());
       }
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
       particles.forEach((p, index) => {
         p.update();
         p.draw();
-        
         if (p.life <= 0 || p.y < 0) {
           particles.splice(index, 1);
           particles.push(new Particle());
         }
       });
-      
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -107,15 +131,40 @@ export default function Atmosphere({ soundEnabled }: { soundEnabled: boolean }) 
 
   return (
     <>
+      {/* The Mashaal (Torch) Glow following the cursor */}
+      <motion.div 
+        className="fixed top-0 left-0 w-[600px] h-[600px] pointer-events-none z-[30] rounded-full"
+        style={{
+          background: 'radial-gradient(circle, rgba(255,103,31,0.08) 0%, rgba(139,37,0,0.02) 40%, transparent 70%)',
+          mixBlendMode: 'color-burn',
+          marginLeft: '-300px',
+          marginTop: '-300px'
+        }}
+        animate={{
+          x: mousePos.x,
+          y: mousePos.y
+        }}
+        transition={{ type: 'tween', ease: 'easeOut', duration: 0.1 }}
+      />
+
       <canvas 
         ref={canvasRef} 
         className="fixed inset-0 w-full h-full pointer-events-none z-[40]"
         style={{ mixBlendMode: 'screen' }}
       />
+      
+      {/* Background War Drums */}
       <audio 
         ref={audioRef}
         loop
         src="https://cdn.pixabay.com/audio/2022/11/24/audio_3d1000639d.mp3" 
+      />
+
+      {/* Paper Rustle for scrolling */}
+      <audio 
+        ref={rustleRef}
+        loop
+        src="https://cdn.pixabay.com/audio/2022/03/15/audio_73229bbf93.mp3" 
       />
     </>
   );
