@@ -7,17 +7,20 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
   const [progress, setProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const curtainRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Cinematic slow counter
     let current = 0;
+    
+    // Slow, suspenseful loading
     const interval = setInterval(() => {
-      current += Math.floor(Math.random() * 5) + 1;
+      current += Math.floor(Math.random() * 3) + 1;
+      
       if (current >= 100) {
         current = 100;
         clearInterval(interval);
         
-        // Slow cinematic fade out
+        // The Curtain Reveal Animation
         const tl = gsap.timeline({
           onComplete: () => {
             if (containerRef.current) containerRef.current.style.display = 'none';
@@ -25,35 +28,39 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
           }
         });
 
+        // 1. Text glows and fades out
         tl.to(textRef.current, {
           opacity: 0,
-          scale: 1.1,
-          duration: 2.0,
-          ease: "power2.out"
-        })
-        .to(containerRef.current, {
-          opacity: 0,
+          scale: 1.05,
+          filter: "blur(10px)",
           duration: 1.5,
           ease: "power2.inOut"
-        }, "-=1.0");
+        })
+        // 2. The curtain lifts slowly (very expensive feel)
+        .to(curtainRef.current, {
+          yPercent: -100,
+          duration: 2.0,
+          ease: "power4.inOut"
+        }, "-=0.5");
       }
       setProgress(current);
-    }, 60);
+    }, 50);
 
     return () => clearInterval(interval);
   }, [onComplete]);
 
   return (
-    <div ref={containerRef} className="fixed inset-0 z-[999] pointer-events-none flex items-center justify-center bg-black">
-      <div ref={textRef} className="flex flex-col items-center gap-4">
-        <h1 className="text-2xl md:text-4xl text-[#c89d70] tracking-[0.5em] font-serif" style={{ fontFamily: 'var(--font-playfair)' }}>
-          DIRECTOR'S CUT
+    <div ref={containerRef} className="fixed inset-0 z-[999] pointer-events-none flex items-center justify-center">
+      {/* The solid black curtain */}
+      <div ref={curtainRef} className="absolute inset-0 bg-black z-0" />
+      
+      {/* The Typography */}
+      <div ref={textRef} className="relative z-10 flex flex-col items-center gap-8">
+        <h1 className="text-xl md:text-3xl text-[#d4af37] tracking-[0.6em] font-serif font-light opacity-90" style={{ fontFamily: 'var(--font-playfair)' }}>
+          THE ARCHIVES
         </h1>
-        <div className="w-[1px] h-12 bg-white/20 overflow-hidden relative">
-          <div 
-            className="absolute bottom-0 w-full bg-white transition-all duration-300" 
-            style={{ height: `${progress}%` }} 
-          />
+        <div className="font-sans text-xs tracking-widest text-white/40">
+          VOL. {progress.toString().padStart(3, '0')}
         </div>
       </div>
     </div>
