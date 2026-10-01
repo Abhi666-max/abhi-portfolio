@@ -1,43 +1,36 @@
 "use client";
-
-import { useState } from 'react';
-import Hero from '@/components/Hero';
-import About from '@/components/About';
-import Experience from '@/components/Experience';
-import Projects from '@/components/Projects';
-import Footer from '@/components/Footer';
+import { useState, useEffect } from 'react';
 import Preloader from '@/components/Preloader';
-import ScrollSkew from '@/components/ScrollSkew';
-import VideoBackground from '@/components/VideoBackground';
+import HeroZoom from '@/components/HeroZoom';
+import HorizontalProjects from '@/components/HorizontalProjects';
+import SmoothScroll from '@/components/SmoothScroll';
+import MagneticCursor from '@/components/MagneticCursor';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    // Lock scroll while loading
+    if (isLoading) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isLoading]);
+
   return (
-    <main className="relative w-full bg-black min-h-screen text-white overflow-hidden font-sans">
-      {/* The Story Curtain Loader */}
+    <main className="bg-[#050505] min-h-screen text-white font-sans selection:bg-white selection:text-black">
+      <MagneticCursor />
       {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
       
-      {/* Deep Atmospheric Video */}
-      <VideoBackground />
-      
-      {/* Smooth Elastic Scroll Engine */}
-      <ScrollSkew>
-        <div id="scroll-container" className="relative z-10 w-full flex flex-col mix-blend-screen">
-          
-          {/* The Landing */}
-          <Hero isLoaded={!isLoading} />
-          
-          {/* The Chapters */}
-          <div className="flex flex-col gap-32 pb-48">
-            <About />        {/* Chapter I */}
-            <Experience />   {/* Chapter II */}
-            <Projects />     {/* Chapter III */}
-          </div>
-          
+      <SmoothScroll>
+        <div id="main-content" className="relative z-10 w-full flex flex-col">
+          <HeroZoom isLoaded={!isLoading} />
+          <HorizontalProjects />
           <Footer />
         </div>
-      </ScrollSkew>
+      </SmoothScroll>
     </main>
   );
 }
