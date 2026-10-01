@@ -3,6 +3,7 @@ import { useRef, useEffect } from 'react';
 import { portfolioData } from '@/data/mockData';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import Rajmudra3D from '@/components/Rajmudra3D';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -68,7 +69,7 @@ export default function TrueHistoricEngine() {
         
         {/* --- TITLE (Shri / Introduction) --- */}
         <div ref={el => elementsRef.current[0] = el} className="flex flex-col items-center text-center">
-          <div className="w-16 h-16 mb-8 opacity-70" style={{ backgroundImage: 'url("https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Om_symbol.svg/1024px-Om_symbol.svg.png")', backgroundSize: 'contain', backgroundRepeat: 'no-repeat', filter: 'sepia(1) hue-rotate(-50deg) saturate(3) brightness(0.5)' }} />
+          <Rajmudra3D />
           <h1 className="text-6xl md:text-[8vw] leading-none mb-6 text-[#8b2500]" style={{ fontFamily: 'var(--font-yatra)' }}>
             {portfolioData.profile.name}
           </h1>
