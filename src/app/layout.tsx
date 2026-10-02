@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import LenisProvider from '@/components/LenisProvider';
+import BatCursor from '@/components/BatCursor';
 
 export const metadata: Metadata = {
-  title: 'Anime Studio | Portfolio',
-  description: 'Manga Aesthetic Portfolio',
+  title: 'Cricket World Cup | Portfolio',
+  description: 'A stadium cinematic portfolio',
 };
 
 export default function RootLayout({
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <LenisProvider>
+          <BatCursor />
           {children}
         </LenisProvider>
       </body>

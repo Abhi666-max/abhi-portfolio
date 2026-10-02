@@ -1,79 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&family=VT323&display=swap');
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #f4f4f4;
-  --text-primary: #000000;
-  --akira-red: #ff003c;
-  --font-anton: 'Anton', sans-serif;
-  --font-marker: 'Permanent Marker', cursive;
+  --font-sports: 'Bebas Neue', sans-serif;
+  --font-standard: 'Inter', sans-serif;
+  --font-led: 'VT323', monospace;
+  --stadium-green: #0a1f0f;
+  --led-gold: #ffbe00;
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  /* Manga Halftone Background */
-  background-image: radial-gradient(#000000 2px, transparent 2px);
-  background-size: 16px 16px;
+  background-color: var(--stadium-green);
+  color: white;
+  cursor: none; 
   overflow-x: hidden;
-  cursor: crosshair;
+  font-family: var(--font-standard);
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 60%),
+    linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+    url("https://www.transparenttextures.com/patterns/dark-matter.png");
 }
 
 /* Hide scrollbars */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: #fff; border-left: 2px solid #000; }
-::-webkit-scrollbar-thumb { background: #000; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: var(--led-gold); }
 
-.manga-panel {
-  border: 6px solid #000;
-  background-color: #fff;
-  box-shadow: 10px 10px 0px #000;
+/* LED Board Effect */
+.jumbotron {
+  background-color: #000;
+  border: 4px solid #333;
+  box-shadow: 
+    0 0 20px rgba(0,0,0,1),
+    inset 0 0 10px rgba(0,0,0,1),
+    0 0 50px rgba(255,190,0,0.1);
   position: relative;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.manga-panel:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 14px 14px 0px var(--akira-red);
-}
-
-/* Speed Lines Background */
-.speed-lines {
+.jumbotron::after {
+  content: '';
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 12px);
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.5) 2px, rgba(0,0,0,0.5) 4px);
   pointer-events: none;
 }
 
-/* Speech Bubble */
-.speech-bubble {
-  position: relative;
-  background: #fff;
-  border: 4px solid #000;
-  border-radius: 50%;
-  padding: 20px;
-  text-align: center;
+.led-text {
+  font-family: var(--font-led);
+  color: var(--led-gold);
+  text-shadow: 0 0 8px var(--led-gold);
 }
-.speech-bubble::before {
-  content: '';
+
+.glass-crack {
   position: absolute;
-  bottom: -20px;
-  left: 50px;
-  border-width: 20px 20px 0;
-  border-style: solid;
-  border-color: #000 transparent transparent transparent;
-  display: block;
-  width: 0;
-}
-.speech-bubble::after {
-  content: '';
-  position: absolute;
-  bottom: -13px;
-  left: 54px;
-  border-width: 15px 15px 0;
-  border-style: solid;
-  border-color: #fff transparent transparent transparent;
-  display: block;
-  width: 0;
+  inset: 0;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Broken_glass.svg/1024px-Broken_glass.svg.png");
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: 0.8;
 }

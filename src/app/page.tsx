@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
-import AnimePreloader from '@/components/AnimePreloader';
-import MangaEngine from '@/components/MangaEngine';
+import CricketPreloader from '@/components/CricketPreloader';
+import CricketEngine from '@/components/CricketEngine';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,8 +16,8 @@ export default function Home() {
 
   return (
     <main>
-      {isLoading && <AnimePreloader onComplete={() => setIsLoading(false)} />}
-      {!isLoading && <MangaEngine />}
+      {isLoading && <CricketPreloader onComplete={() => setIsLoading(false)} />}
+      {!isLoading && <CricketEngine />}
     </main>
   );
 }
