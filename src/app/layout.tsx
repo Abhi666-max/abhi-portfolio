@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import LenisProvider from '@/components/LenisProvider';
-import BatCursor from '@/components/BatCursor';
+import LuxuryCursor from '@/components/LuxuryCursor';
 
 export const metadata: Metadata = {
-  title: 'Cricket World Cup | Portfolio',
-  description: 'A stadium cinematic portfolio',
+  title: 'Abhijit | Creative Developer',
+  description: 'Crafting digital experiences with precision.',
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <LenisProvider>
-          <BatCursor />
+          <LuxuryCursor />
           {children}
         </LenisProvider>
       </body>

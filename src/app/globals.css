@@ -1,63 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 @import "tailwindcss";
 
 :root {
-  --font-sports: 'Bebas Neue', sans-serif;
-  --font-standard: 'Inter', sans-serif;
-  --font-led: 'VT323', monospace;
-  --stadium-green: #0a1f0f;
-  --led-gold: #ffbe00;
+  --bg-primary: #030303; 
+  --text-primary: #f5f5f7; 
+  --text-muted: #86868b;
+  --accent: #d4af37;
+  --border-thin: rgba(255, 255, 255, 0.08);
+  
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
 }
 
 body {
-  background-color: var(--stadium-green);
-  color: white;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
   cursor: none; 
   overflow-x: hidden;
-  font-family: var(--font-standard);
-  background-image: 
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 60%),
-    linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-    url("https://www.transparenttextures.com/patterns/dark-matter.png");
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Cinematic Film Grain Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
 }
 
 /* Hide scrollbars */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #000; }
-::-webkit-scrollbar-thumb { background: var(--led-gold); }
+::-webkit-scrollbar { width: 0px; }
 
-/* LED Board Effect */
-.jumbotron {
-  background-color: #000;
-  border: 4px solid #333;
-  box-shadow: 
-    0 0 20px rgba(0,0,0,1),
-    inset 0 0 10px rgba(0,0,0,1),
-    0 0 50px rgba(255,190,0,0.1);
-  position: relative;
+/* Luxury Utilities */
+.text-serif { font-family: var(--font-serif); }
+.text-sans { font-family: var(--font-sans); }
+
+.hairline-border {
+  border: 1px solid var(--border-thin);
 }
 
-.jumbotron::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.5) 2px, rgba(0,0,0,0.5) 4px);
-  pointer-events: none;
+.hairline-b {
+  border-bottom: 1px solid var(--border-thin);
 }
 
-.led-text {
-  font-family: var(--font-led);
-  color: var(--led-gold);
-  text-shadow: 0 0 8px var(--led-gold);
+.mask-text {
+  overflow: hidden;
 }
 
-.glass-crack {
-  position: absolute;
-  inset: 0;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Broken_glass.svg/1024px-Broken_glass.svg.png");
-  background-size: cover;
-  background-position: center;
-  mix-blend-mode: screen;
-  pointer-events: none;
-  opacity: 0.8;
+.reveal-line {
+  display: inline-block;
+  transform: translateY(100%);
+}
+
+.magnetic-wrap {
+  display: inline-block;
 }

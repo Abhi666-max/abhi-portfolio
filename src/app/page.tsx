@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
-import CricketPreloader from '@/components/CricketPreloader';
-import CricketEngine from '@/components/CricketEngine';
+import LuxuryPreloader from '@/components/LuxuryPreloader';
+import LuxuryEngine from '@/components/LuxuryEngine';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,8 +16,8 @@ export default function Home() {
 
   return (
     <main>
-      {isLoading && <CricketPreloader onComplete={() => setIsLoading(false)} />}
-      {!isLoading && <CricketEngine />}
+      {isLoading && <LuxuryPreloader onComplete={() => setIsLoading(false)} />}
+      {!isLoading && <LuxuryEngine />}
     </main>
   );
 }
