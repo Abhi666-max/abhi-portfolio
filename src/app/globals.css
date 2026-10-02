@@ -1,38 +1,93 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Share+Tech+Mono&display=swap');
 @import "tailwindcss";
 
 :root {
-  --sky-top: #ff7b54;
-  --sky-bottom: #ffd56b;
-  --mountain-back: #935a76;
-  --mountain-mid: #5c3c5a;
-  --mountain-front: #2a2344;
-  --forest-floor: #161224;
+  --pubg-yellow: #ffb800;
+  --pubg-blue: #00d2ff;
+  --pubg-red: #ff3333;
+  --bg-dark: #0f1011;
+  --military-green: #1a1f1b;
   
-  --font-heading: 'Lora', serif;
-  --font-text: 'Nunito', sans-serif;
+  --font-heading: 'Teko', sans-serif;
+  --font-hud: 'Share Tech Mono', monospace;
 }
 
 body {
-  background-color: var(--forest-floor);
-  color: #fff;
-  font-family: var(--font-text);
+  background-color: var(--bg-dark);
+  color: white;
+  font-family: var(--font-hud);
   overflow-x: hidden;
+  cursor: none;
+  background-image: 
+    radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%),
+    url("https://www.transparenttextures.com/patterns/cubes.png");
 }
 
 /* Hide scrollbars for cinematic feel */
-::-webkit-scrollbar { width: 0px; }
-
-/* The Sun Glow */
-.sun-glow {
-  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,236,179,0.8) 20%, transparent 60%);
-}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: var(--pubg-yellow); }
 
 .heading {
   font-family: var(--font-heading);
+  text-transform: uppercase;
 }
 
-.bird {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="4"><path d="M10 50 Q 25 30 50 50 Q 75 30 90 50" /></svg>');
-  background-size: cover;
+/* Red Smoke Animation */
+.red-smoke {
+  background: radial-gradient(circle, rgba(255,51,51,0.8) 0%, rgba(255,51,51,0.2) 40%, transparent 70%);
+  filter: blur(20px);
+  animation: pulse-smoke 2s infinite alternate;
+}
+
+@keyframes pulse-smoke {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0.4; }
+}
+
+/* The Blue Zone - Shimmering Effect */
+.blue-zone-wall {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  background: linear-gradient(90deg, rgba(0,210,255,0.1), rgba(0,210,255,0.4));
+  pointer-events: none;
+  z-index: 9000;
+  mix-blend-mode: screen;
+  /* Animate the edge of the blue zone */
+  border-right: 2px solid var(--pubg-blue);
+  box-shadow: inset -20px 0 50px rgba(0,210,255,0.3);
+}
+
+.blue-zone-left {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.blue-zone-right {
+  right: 0;
+  transform: translateX(100%);
+  background: linear-gradient(-90deg, rgba(0,210,255,0.1), rgba(0,210,255,0.4));
+  border-right: none;
+  border-left: 2px solid var(--pubg-blue);
+  box-shadow: inset 20px 0 50px rgba(0,210,255,0.3);
+}
+
+/* Airdrop Crate Styling */
+.airdrop-crate {
+  background-color: #2b3531; /* military grey/green */
+  border: 2px solid #1a201d;
+  box-shadow: 
+    inset 0 0 50px rgba(0,0,0,0.8),
+    0 10px 20px rgba(0,0,0,0.5);
+  position: relative;
+}
+.airdrop-crate::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 40%;
+  background-color: #1f2522; /* lid */
+  border-bottom: 4px solid var(--pubg-red);
 }

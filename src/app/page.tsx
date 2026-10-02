@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
-import LandscapePreloader from '@/components/LandscapePreloader';
-import LandscapeEngine from '@/components/LandscapeEngine';
+import PubgPreloader from '@/components/PubgPreloader';
+import PubgEngine from '@/components/PubgEngine';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,8 +13,8 @@ export default function Home() {
 
   return (
     <main>
-      {isLoading && <LandscapePreloader onComplete={() => setIsLoading(false)} />}
-      {!isLoading && <LandscapeEngine />}
+      {isLoading && <PubgPreloader onComplete={() => setIsLoading(false)} />}
+      {!isLoading && <PubgEngine />}
     </main>
   );
 }
