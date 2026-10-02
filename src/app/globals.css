@@ -1,61 +1,75 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Space+Grotesk:wght@700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #030303; 
-  --text-primary: #f5f5f7; 
-  --text-muted: #86868b;
-  --accent: #d4af37;
-  --border-thin: rgba(255, 255, 255, 0.08);
-  
-  --font-serif: 'Playfair Display', serif;
-  --font-sans: 'Inter', sans-serif;
+  --spider-red: #ff003c;
+  --spider-blue: #00f0ff;
+  --spider-yellow: #fffb00;
+  --bg-color: #080811;
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  cursor: none; 
+  background-color: var(--bg-color);
+  color: white;
+  cursor: crosshair;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Cinematic Film Grain Overlay */
-body::before {
+/* Comic Book Halftone Pattern Overlay */
+body::after {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+  background-image: radial-gradient(var(--spider-blue) 1px, transparent 1px);
+  background-size: 10px 10px;
+  opacity: 0.15;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 9998;
 }
 
 /* Hide scrollbars */
-::-webkit-scrollbar { width: 0px; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-thumb { background: var(--spider-red); }
 
-/* Luxury Utilities */
-.text-serif { font-family: var(--font-serif); }
-.text-sans { font-family: var(--font-sans); }
-
-.hairline-border {
-  border: 1px solid var(--border-thin);
-}
-
-.hairline-b {
-  border-bottom: 1px solid var(--border-thin);
-}
-
-.mask-text {
-  overflow: hidden;
-}
-
-.reveal-line {
+/* Spider-Verse Chromatic Glitch Effect */
+.glitch-text {
+  position: relative;
+  font-family: 'Bangers', cursive;
+  text-transform: uppercase;
   display: inline-block;
-  transform: translateY(100%);
+  transition: all 0.1s ease;
 }
 
-.magnetic-wrap {
-  display: inline-block;
+.glitch-text:hover {
+  animation: glitch-anim 0.1s infinite linear alternate-reverse;
+  transform: scale(1.05) rotate(-2deg);
+  cursor: crosshair;
+}
+
+@keyframes glitch-anim {
+  0% { text-shadow: -5px 0 var(--spider-red), 5px 0 var(--spider-blue); }
+  25% { text-shadow: 5px 0 var(--spider-red), -5px 0 var(--spider-blue); }
+  50% { text-shadow: -5px 5px var(--spider-yellow), 5px -5px var(--spider-red); }
+  75% { text-shadow: 5px -5px var(--spider-yellow), -5px 5px var(--spider-blue); }
+  100% { text-shadow: -5px 0 var(--spider-red), 5px 0 var(--spider-blue); }
+}
+
+/* Comic Panel Box */
+.comic-panel {
+  border: 4px solid #fff;
+  background-color: var(--spider-red);
+  box-shadow: 10px 10px 0 var(--spider-blue);
+  position: relative;
+}
+
+/* Comic Action Lines (Blast) */
+.action-lines {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--spider-red),
+    var(--spider-red) 10px,
+    transparent 10px,
+    transparent 20px
+  );
 }

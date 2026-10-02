@@ -1,23 +1,20 @@
 "use client";
 import { useState, useEffect } from 'react';
-import LuxuryPreloader from '@/components/LuxuryPreloader';
-import LuxuryEngine from '@/components/LuxuryEngine';
+import SpiderPreloader from '@/components/SpiderPreloader';
+import SpiderEngine from '@/components/SpiderEngine';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (isLoading) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    if (isLoading) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
   }, [isLoading]);
 
   return (
     <main>
-      {isLoading && <LuxuryPreloader onComplete={() => setIsLoading(false)} />}
-      {!isLoading && <LuxuryEngine />}
+      {isLoading && <SpiderPreloader onComplete={() => setIsLoading(false)} />}
+      {!isLoading && <SpiderEngine />}
     </main>
   );
 }
