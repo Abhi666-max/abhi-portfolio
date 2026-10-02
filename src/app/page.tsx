@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
-import SpiderPreloader from '@/components/SpiderPreloader';
-import SpiderEngine from '@/components/SpiderEngine';
+import LandscapePreloader from '@/components/LandscapePreloader';
+import LandscapeEngine from '@/components/LandscapeEngine';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,8 +13,8 @@ export default function Home() {
 
   return (
     <main>
-      {isLoading && <SpiderPreloader onComplete={() => setIsLoading(false)} />}
-      {!isLoading && <SpiderEngine />}
+      {isLoading && <LandscapePreloader onComplete={() => setIsLoading(false)} />}
+      {!isLoading && <LandscapeEngine />}
     </main>
   );
 }

@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import SpiderCursor from '@/components/SpiderCursor';
+import LenisProvider from '@/components/LenisProvider';
 
 export const metadata: Metadata = {
-  title: 'Into The Spider-Verse | Portfolio',
-  description: 'Extreme Web Slinger',
+  title: 'A New Journey | Portfolio',
+  description: 'An interactive storybook portfolio.',
 };
 
 export default function RootLayout({
@@ -15,8 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SpiderCursor />
-        {children}
+        <LenisProvider>
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );
